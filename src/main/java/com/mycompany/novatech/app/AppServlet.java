@@ -27,7 +27,9 @@ public final class AppServlet extends HttpServlet {
         try {
             if("/login".equals(path)) {
                 if(actual!=null){s.sendRedirect(base(q)+"/menu");return;}
-                pagina(q,s,"Acceso al sistema","<section class='login'><div class='intro'><span class='eyebrow'>NOVATECH · GESTIÓN COMERCIAL</span><h1>Todo empieza con una buena conexión.</h1><p>Accede a tu espacio de trabajo para gestionar el negocio.</p><div class='badge'>Avance POO II · Acceso y usuarios</div></div><form class='card' method='post' action='"+base(q)+"/login'>"+csrf(q)+"<h2>Bienvenido</h2><p class='muted'>Ingresa con tu cuenta de NovaTech.</p>"+campo("Usuario","usuario","","text",50,true)+"<label>Contraseña<input type='password' name='password' maxlength='128' autocomplete='current-password' required></label><button>Ingresar al sistema</button><p class='small'>Tras 3 intentos incorrectos, la cuenta se bloquea. Un administrador puede desbloquearla.</p></form></section>");
+                q.setAttribute("aviso",q.getSession().getAttribute("mensaje"));
+                q.getSession().removeAttribute("mensaje");
+                q.getRequestDispatcher("/WEB-INF/login.jsp").forward(q,s);
             } else if("/menu".equals(path)) {
                 String cards="<article class='card'><span class='eyebrow'>TU CUENTA</span><h2>"+e(actual.username)+"</h2><p>Rol: "+e(actual.rol)+"</p><p>Sesión activa y acceso validado.</p></article>";
                 if(actual.esAdministrador()) cards+="<a class='card linkcard' href='"+base(q)+"/usuarios'><span class='eyebrow'>ADMINISTRACIÓN</span><h2>Gestión de usuarios →</h2><p>Crea cuentas, edita datos y desbloquea accesos.</p></a><a class='card linkcard' href='"+base(q)+"/roles'><span class='eyebrow'>SEGURIDAD</span><h2>Roles →</h2><p>Administra los perfiles de acceso del sistema.</p></a>";

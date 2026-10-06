@@ -16,7 +16,7 @@ public final class SeguridadFilter implements Filter {
         s.setHeader("Content-Security-Policy","default-src 'self'; style-src 'self'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'");
         s.setHeader("Cache-Control","no-store");
         String path=q.getServletPath();
-        if("/estilos.css".equals(path)){chain.doFilter(q,s);return;}
+        if("/estilos.css".equals(path) || path.startsWith("/assets/login/")){chain.doFilter(q,s);return;}
         HttpSession session=q.getSession(true);
         if(session.getAttribute("csrf")==null)session.setAttribute("csrf",UUID.randomUUID().toString());
         if("POST".equals(q.getMethod()) && !session.getAttribute("csrf").equals(q.getParameter("csrf"))) {s.sendError(403,"Formulario vencido. Recarga la página.");return;}
