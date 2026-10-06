@@ -27,7 +27,7 @@ public final class SeguridadFilter implements Filter {
             if(actual==null || !actual.activo || actual.bloqueado){session.removeAttribute("usuarioId");actual=null;}
         }
         q.setAttribute("actual",actual);
-        boolean publica=path.isEmpty() || "/".equals(path) || "/login".equals(path);
+        boolean publica=path.isEmpty() || "/".equals(path) || "/login".equals(path) || "/acceso-cerrado".equals(path);
         if(!publica && actual==null){s.sendRedirect(q.getContextPath()+"/login");return;}
         if(("/usuarios".equals(path) || "/roles".equals(path)) && !actual.esAdministrador()){s.sendError(403,"Acceso exclusivo para administradores.");return;}
         chain.doFilter(q,s);

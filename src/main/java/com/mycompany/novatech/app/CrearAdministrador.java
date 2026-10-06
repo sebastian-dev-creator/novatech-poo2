@@ -18,7 +18,7 @@ public final class CrearAdministrador {
             String login=nombre.getText().trim();
             if(!login.matches("[A-Za-z0-9._-]{3,50}")||a.length<12||a.length>128)throw new IllegalArgumentException("Revisa el usuario (3 a 50 caracteres) y la longitud de contraseña.");
             String hash=PasswordUtil.generarHash(new String(a));
-            try(Connection c=ConexionBD.obtenerConexion()) {
+            try(Connection c=ConexionBD.getInstancia().obtenerConexion()) {
                 c.setAutoCommit(false);
                 try {
                     int rol;

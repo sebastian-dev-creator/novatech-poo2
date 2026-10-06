@@ -7,5 +7,7 @@ public final class Usuario {
     public String username, nombres, apellidos, rol;
     public boolean activo, bloqueado;
     public int intentos;
+    public String dni;
+    public Integer sexoId, estadoCivilId;
     public boolean esAdministrador() { return "ADMINISTRADOR".equals(rol); }
 }

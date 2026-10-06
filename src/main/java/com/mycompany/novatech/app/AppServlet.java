@@ -7,12 +7,24 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
-@WebServlet(urlPatterns={"/login","/menu","/usuarios","/roles","/salir"})
+@WebServlet(urlPatterns={"/login","/menu","/usuarios","/roles","/salir","/acceso-cerrado"})
 public final class AppServlet extends HttpServlet {
     private final UsuarioRepository repo=new UsuarioRepository();
     public static String e(Object value){return value==null?"":value.toString().replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;").replace("'","&#39;");}
     private String valor(HttpServletRequest q,String k){String x=q.getParameter(k);return x==null?"":x;}
     private int numero(HttpServletRequest q,String k){String x=valor(q,k);if(x.isEmpty())return 0;try{return Integer.parseInt(x);}catch(NumberFormatException e){throw new IllegalArgumentException("Identificador inválido.");}}
+    private Integer opcional(HttpServletRequest q,String k) { return valor(q,k).isBlank()?null:numero(q,k); }
+    private String selectorPersonal(String titulo,String nombre,Integer seleccionado,List<String[]> opciones) {
+        StringBuilder b=new StringBuilder("<label>"+titulo+"<select name='"+nombre+"'><option value=''>Sin especificar</option>");
+        boolean encontrado=seleccionado==null;
+        for(String[] opcion:opciones) {
+            boolean elegido=seleccionado!=null && seleccionado==Integer.parseInt(opcion[0]);
+            encontrado|=elegido;
+            b.append("<option value='").append(e(opcion[0])).append("' ").append(elegido?"selected":"").append(">").append(e(opcion[1])).append("</option>");
+        }
+        if(!encontrado) b.append("<option selected value='").append(seleccionado).append("'>Opción inactiva: selecciona otra</option>");
+        return b.append("</select></label>").toString();
+    }
     private String csrf(HttpServletRequest q){return "<input type='hidden' name='csrf' value='"+e(q.getSession().getAttribute("csrf"))+"'>";}
     private String base(HttpServletRequest q){return q.getContextPath();}
     private String campo(String label,String name,String value,String type,int max,boolean obligatorio){return "<label>"+label+"<input name='"+name+"' type='"+type+"' value='"+e(value)+"' maxlength='"+max+"' "+(obligatorio?"required":"")+"></label>";}
@@ -25,7 +37,9 @@ public final class AppServlet extends HttpServlet {
     @Override protected void doGet(HttpServletRequest q,HttpServletResponse s)throws IOException,ServletException {
         Usuario actual=(Usuario)q.getAttribute("actual");String path=q.getServletPath();
         try {
-            if("/login".equals(path)) {
+            if("/acceso-cerrado".equals(path)) {
+                q.getRequestDispatcher("/WEB-INF/acceso-cerrado.jsp").forward(q,s);
+            } else if("/login".equals(path)) {
                 if(actual!=null){s.sendRedirect(base(q)+"/menu");return;}
                 q.setAttribute("aviso",q.getSession().getAttribute("mensaje"));
                 q.getSession().removeAttribute("mensaje");
@@ -45,6 +59,9 @@ public final class AppServlet extends HttpServlet {
         if(u==null)throw new IllegalArgumentException("El usuario no existe.");
         StringBuilder b=new StringBuilder("<span class='eyebrow'>ADMINISTRACIÓN</span><h1>Gestión de usuarios</h1><p class='muted'>Cuentas, datos personales y control de acceso.</p><div class='split'><form class='card' method='post' action='"+base(q)+"/usuarios'>"+csrf(q)+"<input type='hidden' name='accion' value='guardar'><input type='hidden' name='id' value='"+u.id+"'><h2>"+(id==0?"Nuevo usuario":"Editar usuario")+"</h2>");
         b.append(campo("Usuario","usuario",u.username,"text",50,true)).append(campo("Nombres","nombres",u.nombres,"text",80,true)).append(campo("Apellidos","apellidos",u.apellidos,"text",80,true));
+        b.append(campo("DNI (opcional)","dni",u.dni,"text",8,false));
+        b.append(selectorPersonal("Sexo (opcional)","sexo",u.sexoId,repo.catalogoPersonal(true)));
+        b.append(selectorPersonal("Estado civil (opcional)","estadoCivil",u.estadoCivilId,repo.catalogoPersonal(false)));
         b.append("<label>Rol<select name='rol' required>");for(String[] r:repo.roles())if("1".equals(r[3]))b.append("<option value='").append(r[0]).append("' ").append(u.rolId==Integer.parseInt(r[0])?"selected":"").append(">").append(e(r[1])).append("</option>");
         b.append("</select></label><label>").append(id==0?"Contraseña":"Nueva contraseña (vacía para conservar)").append("<input type='password' name='password' autocomplete='new-password' minlength='12' maxlength='128' ").append(id==0?"required":"").append("></label><label class='check'><input type='checkbox' name='activo' ").append(u.activo?"checked":"").append("> Cuenta activa</label><button>Guardar usuario</button><a class='small' href='").append(base(q)).append("/usuarios'>Limpiar formulario</a></form><section class='card tablecard'><h2>Usuarios registrados</h2><div class='scroll'><table><thead><tr><th>Usuario / nombre</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>");
         for(Usuario x:repo.listar()){
@@ -67,14 +84,20 @@ public final class AppServlet extends HttpServlet {
         String path=q.getServletPath();
         try {
             if("/login".equals(path)){
-                Usuario u=new AccesoFacade().ingresar(valor(q,"usuario"),valor(q,"password"));
+                ResultadoAcceso resultado=new AccesoFacade().intentar(valor(q,"usuario"),valor(q,"password"));
+                if(resultado.estado==ResultadoAcceso.Estado.BLOQUEADO) {
+                    q.getSession().invalidate();
+                    s.sendRedirect(base(q)+"/acceso-cerrado");
+                    return;
+                }
+                Usuario u=resultado.usuario;
                 if(u==null){aviso(q,s,"Acceso denegado: revisa tus credenciales o solicita desbloqueo al administrador.","/login");return;}
                 q.changeSessionId();q.getSession().setAttribute("usuarioId",u.id);q.getSession().setAttribute("csrf",UUID.randomUUID().toString());s.sendRedirect(base(q)+"/menu");return;
             }
             if("/salir".equals(path)){q.getSession().invalidate();s.sendRedirect(base(q)+"/login");return;}
             String accion=valor(q,"accion");int id=numero(q,"id");
             if("/usuarios".equals(path)){
-                if("guardar".equals(accion))repo.guardar(id,valor(q,"usuario").trim(),valor(q,"nombres").trim(),valor(q,"apellidos").trim(),numero(q,"rol"),valor(q,"password"),q.getParameter("activo")!=null);
+                if("guardar".equals(accion))repo.guardar(id,valor(q,"usuario").trim(),valor(q,"nombres").trim(),valor(q,"apellidos").trim(),numero(q,"rol"),valor(q,"password"),q.getParameter("activo")!=null,new DatosPersonales(valor(q,"dni"),opcional(q,"sexo"),opcional(q,"estadoCivil")),((Usuario)q.getAttribute("actual")).username);
                 else repo.accion(id,((Usuario)q.getAttribute("actual")).id,accion);
             } else if("/roles".equals(path)){
                 if("guardar".equals(accion))repo.guardarRol(id,valor(q,"nombre").trim(),valor(q,"descripcion").trim());
@@ -82,6 +105,6 @@ public final class AppServlet extends HttpServlet {
             } else {s.sendError(405);return;}
             aviso(q,s,"Cambios guardados correctamente.",path);
         }catch(IllegalArgumentException ex){aviso(q,s,ex.getMessage(),path);}
-        catch(SQLException ex){getServletContext().log("Error al guardar",ex);aviso(q,s,ex.getSQLState()!=null&&ex.getSQLState().startsWith("23")?"No se pudo guardar: nombre duplicado o registro con relaciones existentes.":"No se pudo completar la operación. Revisa la conexión y el registro del servidor.",path);}
+        catch(SQLException ex){getServletContext().log("Error al guardar",ex);aviso(q,s,ex.getSQLState()!=null&&ex.getSQLState().startsWith("23")?"No se pudo guardar: usuario o DNI duplicado, o registro con relaciones existentes.":"No se pudo completar la operación. Revisa la conexión y el registro del servidor.",path);}
     }
 }
