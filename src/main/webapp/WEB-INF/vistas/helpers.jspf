@@ -1,0 +1,18 @@
+<%@page import="com.mycompany.novatech.app.*,java.util.*"%>
+<%!
+private String esc(Object v){return AppServlet.e(v);}
+private String campo(String titulo,String nombre,Object valor,String tipo,int max,boolean requerido){
+ return "<label>"+titulo+"<input name='"+nombre+"' type='"+tipo+"' value='"+esc(valor)+"' maxlength='"+max+"' "+(requerido?"required":"")+"></label>";
+}
+private String catalogo(String titulo,String nombre,Integer seleccionado,List<String[]> opciones){
+ StringBuilder b=new StringBuilder("<label>"+titulo+"<select name='"+nombre+"'><option value=''>Sin especificar</option>");
+ boolean encontrado=seleccionado==null;
+ for(String[] o:opciones){boolean selected=seleccionado!=null&&seleccionado==Integer.parseInt(o[0]);encontrado|=selected;b.append("<option value='").append(esc(o[0])).append("' ").append(selected?"selected":"").append(">").append(esc(o[1])).append("</option>");}
+ if(!encontrado)b.append("<option selected value='").append(seleccionado).append("'>Opción inactiva: selecciona otra</option>");
+ return b.append("</select></label>").toString();
+}
+private String accion(String base,Object token,int id,String ruta,String operacion,String texto){
+ return "<form class='inline' method='post' action='"+base+ruta+"'><input type='hidden' name='csrf' value='"+esc(token)+"'><input type='hidden' name='id' value='"+id+"'><input type='hidden' name='accion' value='"+operacion+"'><button class='secondary'>"+texto+"</button></form>";
+}
+private String estado(Usuario u){return u.bloqueado?"Bloqueado":!u.activo?"Inactivo":"Activo";}
+%>

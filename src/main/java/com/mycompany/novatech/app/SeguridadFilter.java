@@ -22,7 +22,7 @@ public final class SeguridadFilter implements Filter {
         if("POST".equals(q.getMethod()) && !session.getAttribute("csrf").equals(q.getParameter("csrf"))) {s.sendError(403,"Formulario vencido. Recarga la página.");return;}
         Usuario actual=null;Integer id=(Integer)session.getAttribute("usuarioId");
         if(id!=null) {
-            try { actual=new UsuarioRepository().buscar(id); }
+            try { actual=new JdbcUsuarioRepository().buscar(id); }
             catch(SQLException e){q.getServletContext().log("No se pudo validar la sesión",e);s.sendError(503,"Base de datos no disponible.");return;}
             if(actual==null || !actual.activo || actual.bloqueado){session.removeAttribute("usuarioId");actual=null;}
         }

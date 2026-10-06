@@ -2,7 +2,7 @@ package com.mycompany.novatech.app;
 import java.sql.SQLException;
 /** Facade del módulo de acceso: valida entradas y coordina autenticación. */
 public final class AccesoFacade {
-    private final UsuarioRepository repository=new UsuarioRepository();
+    private final UsuarioRepository repository=new JdbcUsuarioRepository();
     public Usuario ingresar(String nombre,String password) throws SQLException {
         return intentar(nombre,password).usuario;
     }
