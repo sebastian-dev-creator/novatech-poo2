@@ -1,0 +1,35 @@
+CREATE DATABASE IF NOT EXISTS novatech CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE novatech;
+CREATE TABLE IF NOT EXISTS roles (
+ id_rol INT AUTO_INCREMENT PRIMARY KEY,
+ nombre VARCHAR(30) NOT NULL UNIQUE,
+ descripcion VARCHAR(150),
+ activo BOOLEAN NOT NULL DEFAULT TRUE
+);
+CREATE TABLE IF NOT EXISTS usuarios (
+ id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+ nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+ password_hash VARCHAR(255) NOT NULL,
+ id_rol INT NOT NULL,
+ activo BOOLEAN NOT NULL DEFAULT TRUE,
+ intentos_fallidos INT NOT NULL DEFAULT 0,
+ bloqueado BOOLEAN NOT NULL DEFAULT FALSE,
+ ultimo_acceso DATETIME NULL,
+ fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ fecha_actualizacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ FOREIGN KEY (id_rol) REFERENCES roles(id_rol),
+ CHECK (intentos_fallidos BETWEEN 0 AND 3)
+);
+CREATE TABLE IF NOT EXISTS datos_personales (
+ id_datos_personales INT AUTO_INCREMENT PRIMARY KEY,
+ id_usuario INT NOT NULL UNIQUE,
+ nombres VARCHAR(80) NOT NULL,
+ apellidos VARCHAR(80) NOT NULL,
+ FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+INSERT INTO roles(nombre,descripcion)
+SELECT 'ADMINISTRADOR','Administración de usuarios y roles'
+WHERE NOT EXISTS(SELECT 1 FROM roles WHERE nombre='ADMINISTRADOR');
+INSERT INTO roles(nombre,descripcion)
+SELECT 'OPERADOR','Acceso al menú principal'
+WHERE NOT EXISTS(SELECT 1 FROM roles WHERE nombre='OPERADOR');
