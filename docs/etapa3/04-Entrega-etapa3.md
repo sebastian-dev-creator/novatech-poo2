@@ -18,7 +18,7 @@ Esta entrega implementa Singleton en el gestor JDBC, amplía la estructura de us
 ## Análisis del bloqueo por bloques
 
 1. **AccesoFacade.intentar:** valida las entradas y delega la autenticación al repositorio.
-2. **UsuarioRepository.autenticarConEstado:** abre una conexión mediante Singleton y bloquea la fila durante la transacción. Distingue cuenta bloqueada, denegación y éxito.
+2. **JdbcUsuarioRepository.autenticarConEstado:** abre una conexión mediante Singleton y bloquea la fila durante la transacción. Distingue cuenta bloqueada, denegación y éxito.
 3. **PasswordUtil:** compara la contraseña ingresada con el hash. La autenticación correcta restablece los intentos; un fallo incrementa el contador hasta tres.
 4. **ResultadoAcceso:** transporta un estado explícito y únicamente entrega un usuario cuando el acceso es correcto. El método anterior `autenticar` se conserva como adaptador compatible.
 5. **AppServlet:** ante BLOQUEADO invalida la sesión y redirige al cierre. No crea una sesión autenticada para una cuenta bloqueada.
@@ -33,7 +33,7 @@ Esta entrega implementa Singleton en el gestor JDBC, amplía la estructura de us
 
 **“Se cierra la ventana”:** el cierre automático funciona en ventanas que el navegador permite cerrar mediante scripts. Una pestaña abierta manualmente puede permanecer abierta; en ese caso se muestra “Acceso cerrado”, la sesión anterior está invalidada y la cuenta continúa bloqueada. Esto no garantiza el cierre físico de cualquier pestaña y debe presentarse como adaptación web del requisito. [Documentación de Window.close](https://developer.mozilla.org/en-US/docs/Web/API/Window/close).
 
-**Modelo:** los campos personales nuevos son opcionales para no inventar datos de usuarios existentes. El Excel contiene distintas variantes de roles/permisos; se conserva un rol por usuario, con permisos directos opcionales y relación roles-permisos. La autorización actual sigue siendo por rol. Los formularios de múltiples contactos/direcciones y la recuperación por token no se dan por implementados.
+**Modelo:** los campos personales nuevos son opcionales para no inventar datos de usuarios existentes. El Excel contiene distintas variantes de roles/permisos; se conserva un rol por usuario, con permisos directos opcionales y relación roles-permisos. La autorización utiliza permisos del rol y, si existe, un permiso directo. La ampliación publicada en 2806fbd incorpora formularios de múltiples correos, teléfonos, direcciones y ubicaciones. La recuperación por token sigue sin implementarse; el Excel la presenta como una opción.
 
 ## Verificación realizada
 

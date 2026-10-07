@@ -162,7 +162,8 @@ public final class JdbcUsuarioRepository implements UsuarioRepository {
     }
     private void ejecutar(Connection c,String sql,int id) throws SQLException { try(PreparedStatement p=c.prepareStatement(sql)) {p.setInt(1,id);p.executeUpdate();} }
 
-    public void guardarRol(int id,String nombre,String descripcion) throws SQLException {
+    public void guardarRol(int id,String nombre,String descripcion,String actor) throws SQLException {
+        if(actor==null || actor.isBlank() || actor.length()>50) throw new IllegalArgumentException("No se pudo identificar al usuario que guarda el rol.");
         nombre=nombre.toUpperCase(Locale.ROOT);
         if(!nombre.matches("[A-Z_]{3,30}") || descripcion.length()>150) throw new IllegalArgumentException("Rol: 3 a 30 letras sin espacios; descripción de hasta 150 caracteres.");
         try(Connection c=ConexionBD.getInstancia().obtenerConexion()) {
@@ -171,8 +172,11 @@ public final class JdbcUsuarioRepository implements UsuarioRepository {
                     p.setInt(1,id);try(ResultSet r=p.executeQuery()) { if(!r.next()) throw new IllegalArgumentException("Rol inexistente."); if("ADMINISTRADOR".equals(r.getString(1)) && !"ADMINISTRADOR".equals(nombre)) throw new IllegalArgumentException("El nombre ADMINISTRADOR está reservado."); }
                 }
             }
-            try(PreparedStatement p=c.prepareStatement(id==0?"INSERT INTO roles(nombre,descripcion) VALUES(?,?)":"UPDATE roles SET nombre=?,descripcion=? WHERE id_rol=?")) {
-                p.setString(1,nombre);p.setString(2,descripcion);if(id!=0)p.setInt(3,id);p.executeUpdate();
+            // El creador se registra una sola vez; editar no cambia su identidad histórica.
+            try(PreparedStatement p=c.prepareStatement(id==0?"INSERT INTO roles(nombre,descripcion,usuario_registro) VALUES(?,?,?)":"UPDATE roles SET nombre=?,descripcion=? WHERE id_rol=?")) {
+                p.setString(1,nombre);p.setString(2,descripcion);
+                if(id==0)p.setString(3,actor);else p.setInt(3,id);
+                p.executeUpdate();
             }
         }
     }

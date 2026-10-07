@@ -35,7 +35,15 @@ public class IntegrationExcel extends IntegrationEtapa4 {
     HttpClient operator=client();post(operator,"/login","csrf",token(get(operator,"/login").body()),"usuario",un,"password",pw);
     ok(!get(operator,"/menu").body().contains("opcion=usuarios"),"Mediator hides administrator choices");
     for(String path:new String[]{"/abrir?opcion=usuarios","/contactos?usuarioId="+uid,"/ubicaciones"})ok(get(operator,path).statusCode()==403,"Operator denied "+path);
-    users.guardarRol(0,"QA_EXCEL_TEMP","Permisos temporales");for(String[] r:users.roles())if(r[1].equals("QA_EXCEL_TEMP"))rid=Integer.parseInt(r[0]);
+    ok(post(h,"/roles","csrf",csrf,"accion","guardar","id","0","nombre","QA_EXCEL_TEMP","descripcion","Permisos temporales","actor","FALSIFICADO","usuario_registro","FALSIFICADO").statusCode()==302,"HTTP role create");
+    for(String[] r:users.roles())if(r[1].equals("QA_EXCEL_TEMP"))rid=Integer.parseInt(r[0]);
+    ok(rid>0,"Role persisted");
+    try(PreparedStatement p=c.prepareStatement("SELECT usuario_registro FROM roles WHERE id_rol=?")){p.setInt(1,rid);try(ResultSet r=p.executeQuery()){ok(r.next()&&an.equals(r.getString(1)),"Role creator comes from authenticated session, not form");}}
+    users.guardarRol(rid,"QA_EXCEL_TEMP","Descripción editada",un);
+    try(PreparedStatement p=c.prepareStatement("SELECT usuario_registro,descripcion FROM roles WHERE id_rol=?")){p.setInt(1,rid);try(ResultSet r=p.executeQuery()){ok(r.next()&&an.equals(r.getString(1))&&"Descripción editada".equals(r.getString(2)),"Editing preserves original role creator");}}
+    boolean actorRechazado=false;
+    try{users.guardarRol(0,"QA_SIN_ACTOR","No debe guardarse",null);}catch(IllegalArgumentException expected){actorRechazado=true;}
+    ok(actorRechazado,"Role creation requires an actor");
     users.guardar(uid,un,"Excel","Operador",rid,"",true);
     PermisoRepository permisos=new PermisoRepository();int gestion=0;for(String[] p:permisos.delRol(rid))if(p[1].equals("GESTIONAR_USUARIOS"))gestion=Integer.parseInt(p[0]);
     ok(get(h,"/permisos?rol="+rid).statusCode()==200,"Permission JSP renders");

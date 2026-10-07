@@ -1,12 +1,12 @@
 # Etapa 3 · Singleton en NovaTech
 
-Estado: primer bloque de la etapa 3. No acredita todavía la ampliación del modelo de datos ni el cierre de todas las validaciones.
+Actualizado el 7 de octubre de 2026. Singleton está implementado y analizado por bloques. El modelo ampliado y las validaciones se describen en la entrega de etapa 3 y en la matriz de cumplimiento; las limitaciones del cierre de pestaña siguen documentadas.
 
 ## Problema y solución
 
 La clase anterior tenía constructor privado y un método estático que abría conexiones. No mantenía una instancia única, por lo que no implementaba Singleton.
 
-Ahora `ConexionBD.getInstancia()` devuelve siempre el mismo gestor dentro de la aplicación. Este objeto conserva la configuración y centraliza la apertura de conexiones. Tanto `UsuarioRepository` como `CrearAdministrador` lo utilizan explícitamente.
+Ahora `ConexionBD.getInstancia()` devuelve siempre el mismo gestor dentro de la aplicación. Este objeto conserva la configuración y centraliza la apertura de conexiones. Tanto `JdbcUsuarioRepository` como `CrearAdministrador` lo utilizan explícitamente.
 
 ## Análisis por bloques
 

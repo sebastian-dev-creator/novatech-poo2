@@ -261,6 +261,6 @@ WHERE ((r.nombre='ADMINISTRADOR' AND p.nombre IN ('VER_MENU','GESTIONAR_USUARIOS
 OR (r.nombre='OPERADOR' AND p.nombre='VER_MENU'))
 AND NOT EXISTS(SELECT 1 FROM roles_permisos rp WHERE rp.id_rol=r.id_rol AND rp.id_permiso=p.id_permiso);
 COMMIT;
-SELECT 'Estructura de etapa 3 aplicada; faltan formularios y logica de los campos nuevos.' AS resultado;
+SELECT 'Estructura de etapa 3 aplicada. Consultar docs/cumplimiento para el estado funcional de cada campo.' AS resultado;
 SELECT COUNT(*) AS usuarios_conservados FROM usuarios;
 SHOW TABLES;

@@ -1,6 +1,6 @@
 # NovaTech: correspondencia con el Excel, etapas 1 a 4
 
-Revisión: 6 de octubre de 2026. Esta matriz separa implementación, evidencia y asuntos que requieren confirmación académica. No certifica una calificación ni el cumplimiento de todo el proyecto final.
+Revisión actualizada: 7 de octubre de 2026. Esta matriz separa implementación, evidencia y asuntos que requieren confirmación académica. No certifica una calificación ni el cumplimiento de todo el proyecto final.
 
 ## Fuentes y criterio de alcance
 
@@ -18,7 +18,7 @@ Revisión: 6 de octubre de 2026. Esta matriz separa implementación, evidencia y
 | Etapas!D2:D3 | Login JSP/HTML publicado | `WEB-INF/login.jsp`; Render y acceso mostrados por el alumno | Base publicada y comprobada |
 | Etapas!D5:D8; Mod!D4 | BD, usuarios y autenticación | MySQL, `ConexionBD`, `JdbcUsuarioRepository.autenticarConEstado` | Implementado y probado |
 | Etapas!D10,D16 | Singleton y análisis por bloques | `ConexionBD` con constructor privado y holder; `docs/etapa3/01-Analisis-Singleton.md` | Implementado y documentado |
-| Etapas!D11; M3!B4:F120 | Reestructuración de usuarios | Script `database/etapa3-ampliar-estructura.sql`, 14 tablas; formularios de datos personales, contactos y ubicaciones | Estructura aplicada previamente; ampliación de formularios probada localmente |
+| Etapas!D11; M3!B4:F120 | Reestructuración de usuarios | Script `database/etapa3-ampliar-estructura.sql`, 14 tablas; formularios de datos personales, contactos y ubicaciones | Estructura aplicada; formularios probados localmente; correo guardado y consultado en Render por el alumno |
 | Etapas!D13; Mod!E5 | Bloqueo al tercer fallo | Contador persistente, bloqueo, invalidación de sesión, página «Acceso cerrado» | Probado |
 | Etapas!D13 | Cierre de ventana | `cierre.js` intenta cerrar; ofrece cierre manual cuando el navegador lo impide | Adaptación técnica explícita, no equivalencia literal garantizada |
 | Etapas!D14 | Contraseña protegida | Hash PBKDF2 con sal; no se guarda texto plano | Probado; explicar hash frente a cifrado reversible |
@@ -32,7 +32,7 @@ Revisión: 6 de octubre de 2026. Esta matriz separa implementación, evidencia y
 | 1!E6; Mod!D9 | CRUD de usuarios, roles y contraseñas | Formularios existentes; contraseña vacía conserva el hash al editar | Probado |
 | M3!B26:F32; ejemplo roles-permisos | Permisos | Asignación de permisos existentes por rol, autorización en servidor, menú acorde al permiso | Probado; solo ADMINISTRADOR asigna permisos |
 
-**Publicación:** el dashboard anterior está publicado en el commit `6fe2860`, según las capturas del alumno. Esta ampliación de cumplimiento se prueba localmente y necesita un nuevo commit, despliegue y comprobación en Render. No confundir ambos estados.
+**Publicación:** el alumno comprobó el despliegue `2806fbd` y el guardado/lectura de un correo en Render. La corrección del creador de roles del 7 de octubre es posterior a ese commit y aún necesita publicarse. No se afirma que se haya repetido toda la suite local en producción.
 
 ## Equivalencias del modelo
 
@@ -43,7 +43,7 @@ Revisión: 6 de octubre de 2026. Esta matriz separa implementación, evidencia y
 | M3!C60:C89: correos, teléfonos y direcciones | Tablas del mismo significado y formularios separados por tipo de contacto | Varios contactos por persona; alta, lectura, edición y eliminación. Correo limitado a 80 caracteres en el formulario, aunque la columna permite 254. |
 | M3!C91:C120: territorio | `paises → departamentos → provincias → distritos` | Formulario de catálogos para registrar solo ubicaciones necesarias; no se inventa un catálogo nacional completo. |
 | `estado` activo/inactivo | `activo BOOLEAN` | Misma información representada por verdadero/falso. `bloqueado` se conserva aparte. |
-| `fechaCreacion`, `fechaActualizacion`, `usuarioRegistro` | `fecha_creacion`, `fecha_actualizacion`, `usuario_registro` | Fechas por MySQL; actor en las operaciones que lo proporcionan. Registros antiguos y algunos catálogos pueden tener actor NULL. No equivale a una bitácora completa de cambios. |
+| `fechaCreacion`, `fechaActualizacion`, `usuarioRegistro` | `fecha_creacion`, `fecha_actualizacion`, `usuario_registro` | Fechas por MySQL; los roles nuevos ahora registran al usuario autenticado, al igual que las altas de usuarios, contactos y ubicaciones desde sus formularios. Editar un rol conserva su creador. Los registros antiguos sin autor conocido pueden mantener NULL; no se inventan autores históricos. No equivale a una bitácora completa de cambios. |
 | Token de recuperación | Hash del token y vencimiento, columnas reservadas | La recuperación por correo no está implementada; `1!G4` la presenta como posible, no obligatoria. |
 | Ejemplos alternativos de M3.1/M3.2/xxx | Se adopta principalmente M3 | No se mezclan direcciones únicas y múltiples, IDs de texto e integer o todos los tipos sugeridos sin criterio. Fecha de nacimiento existe como campo opcional heredado; no tiene formulario en este avance. |
 
@@ -64,6 +64,6 @@ Las columnas F/G/P no indican en el archivo cuántas alternativas deben implemen
 - Etapas 5, 6 y 7: clientes, proveedores, productos/servicios, ventas y reportería/exportación. El menú se ampliará cuando esos módulos existan (`Mod!D7`).
 - `1!D12:E12`: seguridad y auditoría completa. Hay controles de acceso y campos de auditoría, pero falta la bitácora de accesos/cambios necesaria para varios reportes de etapa 7.
 - `1!D13:E13`: respaldo y recuperación. El alumno realizó un respaldo con mysqldump; aún hace falta documentar y probar la restauración para acreditar recuperación.
-- Elección/aceptación docente de la plantilla propia, del cierre web condicionado y de las alternativas de estructuras/POO/pruebas. No se atribuye al profesor una aprobación que no ha dado.
+- La adaptación visual a BootstrapDash fue pospuesta por el alumno el 7 de octubre. Se conserva la plantilla propia. Siguen abiertas la aceptación del cierre web condicionado y las alternativas de estructuras/POO/pruebas. No se atribuye al profesor una aprobación que no ha dado.
 
-Antes de declarar «100 %», deben quedar resueltos el despliegue de esta versión, el contraste del enlace externo y los criterios académicos ambiguos. La implementación funcional no sustituye esa revisión.
+Antes de declarar «100 %», deben quedar resueltos el despliegue del ajuste del 7 de octubre, el contraste del enlace externo y los criterios académicos ambiguos. La implementación funcional no sustituye esa revisión.

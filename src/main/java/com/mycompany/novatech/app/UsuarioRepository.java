@@ -14,6 +14,6 @@ public interface UsuarioRepository {
     void guardar(int id,String nombre,String nombres,String apellidos,int rol,String password,boolean activo) throws SQLException;
     void guardar(int id,String nombre,String nombres,String apellidos,int rol,String password,boolean activo,DatosPersonales datos,String actor) throws SQLException;
     void accion(int id,int actor,String accion) throws SQLException;
-    void guardarRol(int id,String nombre,String descripcion) throws SQLException;
+    void guardarRol(int id,String nombre,String descripcion,String actor) throws SQLException;
     void eliminarRol(int id) throws SQLException;
 }

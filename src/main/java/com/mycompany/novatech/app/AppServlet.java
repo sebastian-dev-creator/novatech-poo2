@@ -115,7 +115,7 @@ public final class AppServlet extends HttpServlet {
                 if("guardar".equals(accion))repo.guardar(id,valor(q,"usuario").trim(),valor(q,"nombres").trim(),valor(q,"apellidos").trim(),numero(q,"rol"),valor(q,"password"),q.getParameter("activo")!=null,new DatosPersonales(valor(q,"dni"),opcional(q,"sexo"),opcional(q,"estadoCivil")),((Usuario)q.getAttribute("actual")).username);
                 else repo.accion(id,((Usuario)q.getAttribute("actual")).id,accion);
             } else if("/roles".equals(path)){
-                if("guardar".equals(accion))repo.guardarRol(id,valor(q,"nombre").trim(),valor(q,"descripcion").trim());
+                if("guardar".equals(accion))repo.guardarRol(id,valor(q,"nombre").trim(),valor(q,"descripcion").trim(),((Usuario)q.getAttribute("actual")).username);
                 else if("eliminar".equals(accion))repo.eliminarRol(id);else throw new IllegalArgumentException("Acción inválida.");
             } else {s.sendError(405);return;}
             aviso(q,s,"Cambios guardados correctamente.",path);
