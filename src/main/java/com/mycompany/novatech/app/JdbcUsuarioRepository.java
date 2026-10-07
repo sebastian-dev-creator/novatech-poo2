@@ -10,7 +10,7 @@ public final class JdbcUsuarioRepository implements UsuarioRepository {
     private static final String SELECT = "SELECT u.*, r.nombre rol, r.activo rol_activo, d.nombres, d.apellidos, d.dni, d.id_sexo, d.id_estado_civil FROM usuarios u JOIN roles r ON r.id_rol=u.id_rol LEFT JOIN datos_personales d ON d.id_usuario=u.id_usuario ";
 
     private Usuario map(ResultSet r) throws SQLException {
-        Usuario u = new Usuario();
+        Usuario u = UsuarioFactory.paraRol(r.getString("rol")).crear();
         u.id=r.getInt("id_usuario"); u.rolId=r.getInt("id_rol");
         u.username=r.getString("nombre_usuario"); u.rol=r.getString("rol");
         u.nombres=r.getString("nombres"); u.apellidos=r.getString("apellidos");

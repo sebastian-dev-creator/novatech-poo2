@@ -1,8 +1,15 @@
 package com.mycompany.novatech.app;
-/** Factory: centraliza la creación del modelo de un formulario nuevo. */
-public final class UsuarioFactory {
-    private UsuarioFactory() {}
-    public static Usuario nuevo() {
-        Usuario u=new Usuario();u.username="";u.nombres="";u.apellidos="";u.activo=true;return u;
+
+/** Creador abstracto. Las subclases deciden el producto mediante crearUsuario(). */
+public abstract class UsuarioFactory {
+    protected abstract Usuario crearUsuario();
+    public final Usuario crear() {
+        Usuario u=crearUsuario();
+        u.username="";u.nombres="";u.apellidos="";u.activo=true;
+        return u;
     }
+    public static UsuarioFactory paraRol(String rol) {
+        return "ADMINISTRADOR".equals(rol)?new AdministradorFactory():new OperativoFactory();
+    }
+    public static Usuario nuevo() { return new OperativoFactory().crear(); }
 }

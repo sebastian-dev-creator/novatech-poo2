@@ -17,6 +17,7 @@
 <label>Rol<select name="rol" required><option value="">Selecciona un rol</option><%for(String[] r:roles)if("1".equals(r[3])){%><option value="<%=esc(r[0])%>" <%=u.rolId==Integer.parseInt(r[0])?"selected":""%>><%=esc(r[1])%></option><%}%></select></label>
 <label><%=u.id==0?"Contraseña":"Nueva contraseña (vacía para conservar)"%><input type="password" name="password" autocomplete="new-password" minlength="12" maxlength="128" <%=u.id==0?"required":""%>><small>Entre 12 y 128 caracteres.</small></label>
 </div><label class="check"><input type="checkbox" name="activo" <%=u.activo?"checked":""%>>Cuenta activa</label></fieldset>
+<%if(u.id>0){%><p><a href="<%=base%>/contactos?usuarioId=<%=u.id%>">Gestionar correos, teléfonos y direcciones →</a></p><%}%>
 <div class="form-actions"><button>Guardar usuario</button><a href="<%=base%>/usuarios">Cancelar</a></div></form>
 <%}else{%>
 <section class="card tablecard"><form class="toolbar" method="get" action="<%=base%>/usuarios">
@@ -24,8 +25,8 @@
 <label>Estado<select name="estado"><option value="">Todos los estados</option><%for(String v:new String[]{"activo","inactivo","bloqueado"}){%><option value="<%=v%>" <%=v.equals(filtro)?"selected":""%>><%=Character.toUpperCase(v.charAt(0))+v.substring(1)%></option><%}%></select></label><button>Buscar</button><a href="<%=base%>/usuarios">Limpiar</a></form>
 <div class="section-heading"><h2>Usuarios registrados</h2><span class="muted"><%=lista.size()%> resultados</span></div>
 <div class="scroll"><table><thead><tr><th>Usuario / nombre</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
-<%for(Usuario x:lista){%><tr><td><strong><%=esc(x.username)%></strong><small><%=esc(x.nombres)%> <%=esc(x.apellidos)%></small></td><td><%=esc(x.rol)%></td><td><span class="pill <%=estado(x).toLowerCase(Locale.ROOT)%>"><%=estado(x)%></span><small>Fallos: <%=x.intentos%>/3</small></td><td class="actions"><a class="text-action" href="<%=base%>/usuarios?editar=<%=x.id%>">Editar</a>
-<%if(x.bloqueado){%><%=accion(base,token,x.id,"/usuarios","desbloquear","Desbloquear")%><%}%>
+<%for(Usuario x:lista){%><tr><td><strong><%=esc(x.username)%></strong><small><%=esc(x.nombres)%> <%=esc(x.apellidos)%></small></td><td><%=esc(x.rol)%></td><td><span class="pill <%=estado(x).toLowerCase(Locale.ROOT)%>"><%=estado(x)%></span><small>Fallos: <%=x.intentos%>/3</small></td><td class="actions"><a class="text-action" href="<%=base%>/usuarios?editar=<%=x.id%>">Editar</a> <a href="<%=base%>/contactos?usuarioId=<%=x.id%>">Contactos</a>
+<%if(x.bloqueado && actual.puede("DESBLOQUEAR_USUARIOS")){%><%=accion(base,token,x.id,"/usuarios","desbloquear","Desbloquear")%><%}%>
 <%if(x.id!=actual.id){if(x.activo){%><%=accion(base,token,x.id,"/usuarios","desactivar","Desactivar")%><%}%>
 <details><summary>Eliminar</summary><p>¿Eliminar la cuenta <strong><%=esc(x.username)%></strong> y sus datos personales?</p><%=accion(base,token,x.id,"/usuarios","eliminar","Confirmar eliminación")%></details><%}%>
 </td></tr><%}%>

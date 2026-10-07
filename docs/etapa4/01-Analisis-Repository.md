@@ -2,9 +2,9 @@
 
 ## Resultado de este avance
 
-Se preparó un dashboard web con navegación lateral, resumen de usuarios, búsqueda por usuario/nombre/DNI, filtros de estado y pantallas separadas de listado y edición. Se conservan altas, consultas, modificaciones, eliminación con confirmación, desactivación y desbloqueo. El administrador gestiona usuarios y roles; el operador solo accede al inicio y a su sesión.
+Se preparó un dashboard web con navegación lateral, resumen de usuarios, búsqueda por usuario/nombre/DNI, filtros de estado y pantallas separadas de listado y edición. Se conservan altas, consultas, modificaciones, eliminación con confirmación, desactivación y desbloqueo. El acceso a usuarios y roles se verifica por los permisos asignados. Por defecto el operador accede al inicio y a su sesión; solo ADMINISTRADOR asigna permisos.
 
-El dashboard usa una **plantilla JSP propia y reutilizable**, no una plantilla comercial o de terceros: `pagina.jsp` define la estructura compartida y carga tres vistas permitidas. El estilo claro con barra lateral azul oscuro utiliza el logo y las fuentes locales del login. No conecta ni modifica la web comercial del negocio.
+El dashboard usa una **plantilla JSP propia y reutilizable**, no una plantilla comercial o de terceros: `pagina.jsp` define la estructura compartida y carga las vistas permitidas por los controladores. El estilo claro con barra lateral azul oscuro utiliza el logo y las fuentes locales del login. No conecta ni modifica la web comercial del negocio.
 
 ## Problema anterior
 
@@ -59,8 +59,8 @@ Las capturas de prueba contienen datos ficticios de una base local. Las pruebas 
 
 ## Límites y siguientes comprobaciones
 
-Este avance cubre el dashboard, el CRUD de los campos de usuario ya conectados y el análisis de Repository. Los formularios de contactos y direcciones no están implementados. `UsuarioFactory` sigue siendo una fábrica estática simple: no se presenta como Factory Method GoF. El mínimo general de dos patrones por módulo del Excel requiere seguimiento separado; este documento acredita Repository para usuarios, no todos los patrones propuestos.
+La ampliación del 6 de octubre conecta los formularios de correos, teléfonos, direcciones y ubicaciones; aplica permisos por rol y convierte `UsuarioFactory` en un creador abstracto con Factory Method. Menú usa Command y Mediator. La explicación de los dos patrones seleccionados por módulo, la matriz del Excel y la normalización están en `docs/cumplimiento`. Se verificaron nuevamente login, bloqueo y CRUD, además de las nuevas operaciones y restricciones.
 
 El 6 de octubre de 2026 el usuario comprobó el panel ejecutado desde NetBeans: compartió el dashboard y la edición guardada de `prueba_etapa3`, confirmó la búsqueda y los filtros, y confirmó la creación y posterior eliminación de `prueba_etapa4`. Las capturas de esta última prueba muestran el alta y la confirmación de eliminación; el resultado final de borrado fue confirmado por texto. Esta ejecución local usa la base configurada por el usuario y se distingue de las pruebas automáticas aisladas descritas arriba.
 
-Queda pendiente publicar estos cambios y comprobar el dashboard en Render. Si el profesor exige una plantilla externa específica, la plantilla propia debe contrastarse con ese criterio antes de darlo por aceptado.
+El dashboard inicial fue publicado en `6fe2860` y mostrado por el alumno en Render. La ampliación de cumplimiento del Excel todavía necesita su propio despliegue y comprobación. Si el profesor exige una plantilla externa específica, la plantilla propia debe contrastarse con ese criterio antes de darlo por aceptado.
