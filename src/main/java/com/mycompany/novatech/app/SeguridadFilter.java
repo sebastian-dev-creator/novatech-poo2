@@ -31,6 +31,9 @@ public final class SeguridadFilter implements Filter {
         boolean publica=path.isEmpty() || "/".equals(path) || "/login".equals(path) || "/acceso-cerrado".equals(path);
         if(!publica && actual==null){s.sendRedirect(q.getContextPath()+"/login");return;}
         String permiso=("/usuarios".equals(path)||"/contactos".equals(path)||"/ubicaciones".equals(path))?"GESTIONAR_USUARIOS":("/roles".equals(path)||"/permisos".equals(path))?"GESTIONAR_ROLES":null;
+        if("/clientes".equals(path))permiso="GESTIONAR_CLIENTES";
+        if("/proveedores".equals(path))permiso="GESTIONAR_PROVEEDORES";
+        if("/productos".equals(path)||"/catalogos-productos".equals(path))permiso="GESTIONAR_PRODUCTOS";
         if(permiso!=null && !actual.puede(permiso)){s.sendError(403,"Tu rol no tiene permiso para esta opción.");return;}
         if("/permisos".equals(path)&&!actual.esAdministrador()){s.sendError(403,"Solo el administrador asigna permisos.");return;}
         if("/usuarios".equals(path)&&"POST".equals(q.getMethod())&&"desbloquear".equals(q.getParameter("accion"))&&!actual.puede("DESBLOQUEAR_USUARIOS")){s.sendError(403,"Tu rol no puede desbloquear usuarios.");return;}

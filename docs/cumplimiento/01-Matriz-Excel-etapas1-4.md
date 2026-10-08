@@ -9,7 +9,7 @@ Revisión actualizada: 7 de octubre de 2026. Esta matriz separa implementación,
 - `Estructura!B2` exige **mínimo dos patrones por módulo**. Las listas de `I5:I7` se usan para elegirlos; no se afirma que todos sean obligatorios simultáneamente.
 - `M3!B2` dice «tablas recomendadas» y `D3` «tipo de dato sugerido». Se adopta ese modelo para usuarios con las equivalencias documentadas abajo.
 - Las columnas de tecnologías y los ejemplos de otras empresas no se convierten automáticamente en funciones nuevas para NovaTech. No se añaden IA, IoT, realidad aumentada, microservicios ni conexión con la web comercial.
-- El enlace externo de Google Sheets en `Etapas!D12` no se pudo consultar durante esta revisión. Se contrastó el archivo local entregado por el alumno. Si ese enlace contiene campos adicionales, queda pendiente cotejarlos; no se presume que sea idéntico.
+- El alumno confirmó el 7 de octubre que el enlace de Google Sheets en `Etapas!D12` corresponde a `13.-Módulos básicos para una solución informática_Formas Normales.xlsx`, ya entregado y revisado. Esa duda de correspondencia queda cerrada.
 
 ## Requisitos de las primeras cuatro etapas
 
@@ -32,7 +32,7 @@ Revisión actualizada: 7 de octubre de 2026. Esta matriz separa implementación,
 | 1!E6; Mod!D9 | CRUD de usuarios, roles y contraseñas | Formularios existentes; contraseña vacía conserva el hash al editar | Probado |
 | M3!B26:F32; ejemplo roles-permisos | Permisos | Asignación de permisos existentes por rol, autorización en servidor, menú acorde al permiso | Probado; solo ADMINISTRADOR asigna permisos |
 
-**Publicación:** el alumno comprobó el despliegue `2806fbd` y el guardado/lectura de un correo en Render. La corrección del creador de roles del 7 de octubre es posterior a ese commit y aún necesita publicarse. No se afirma que se haya repetido toda la suite local en producción.
+**Publicación:** las correcciones `92c72fd` y `740ca79` se publicaron en Render. El 7 de octubre se creó, editó y eliminó un rol temporal en producción y se comprobó por SQL que `usuario_registro=admin` se conservó al editar. La eliminación dejó cero filas del rol temporal. No se afirma que se haya repetido toda la suite local en producción.
 
 ## Equivalencias del modelo
 
@@ -61,9 +61,9 @@ Las columnas F/G/P no indican en el archivo cuántas alternativas deben implemen
 
 ## Requisitos del proyecto final todavía abiertos
 
-- Etapas 5, 6 y 7: clientes, proveedores, productos/servicios, ventas y reportería/exportación. El menú se ampliará cuando esos módulos existan (`Mod!D7`).
+- Etapa 5: CRUD comerciales implementados y probados localmente; falta aplicar su migración en Aiven y publicarlos. Ver `docs/etapa5`. Etapas 6 y 7: ventas y reportería/exportación todavía pendientes.
 - `1!D12:E12`: seguridad y auditoría completa. Hay controles de acceso y campos de auditoría, pero falta la bitácora de accesos/cambios necesaria para varios reportes de etapa 7.
 - `1!D13:E13`: respaldo y recuperación. El alumno realizó un respaldo con mysqldump; aún hace falta documentar y probar la restauración para acreditar recuperación.
-- La adaptación visual a BootstrapDash fue pospuesta por el alumno el 7 de octubre. Se conserva la plantilla propia. Siguen abiertas la aceptación del cierre web condicionado y las alternativas de estructuras/POO/pruebas. No se atribuye al profesor una aprobación que no ha dado.
+- El alumno aclaró que BootstrapDash no es obligatorio y decidió conservar la plantilla propia; no usarlo no es un incumplimiento. Siguen abiertas la aceptación del cierre web condicionado y las alternativas de estructuras/POO/pruebas. No se atribuye al profesor una aprobación que no ha dado.
 
-Antes de declarar «100 %», deben quedar resueltos el despliegue del ajuste del 7 de octubre, el contraste del enlace externo y los criterios académicos ambiguos. La implementación funcional no sustituye esa revisión.
+Los pendientes de despliegue del ajuste de roles y correspondencia del enlace externo ya están resueltos. Antes de declarar cumplimiento literal total, queda aclarar la aceptación del cierre de pestaña condicionado y cuáles alternativas de estructuras/POO/herramientas de pruebas son obligatorias. La implementación funcional no sustituye ese criterio académico.

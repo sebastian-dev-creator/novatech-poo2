@@ -1,0 +1,25 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.mycompany.novatech.app.comercial.*"%>
+<%@include file="helpers.jspf"%>
+<%boolean prov=Boolean.TRUE.equals(request.getAttribute("esProveedor"));String ruta=prov?"/proveedores":"/clientes",singular=prov?"proveedor":"cliente",base=request.getContextPath();Tercero x=(Tercero)request.getAttribute("terceroForm");Object token=session.getAttribute("csrf");List<? extends Tercero> lista=(List<? extends Tercero>)request.getAttribute("terceros");%>
+<div class="page-heading"><div><span class="eyebrow">GESTIÓN COMERCIAL</span><h1><%=prov?"Proveedores":"Clientes"%></h1><p class="muted"><%=prov?"Administra empresas proveedoras y su contacto principal.":"Administra clientes con DNI o RUC y sus datos de contacto."%></p></div><a class="button" href="<%=base+ruta%>?nuevo=1">＋ Nuevo <%=singular%></a></div>
+<%if(Boolean.TRUE.equals(request.getAttribute("mostrarForm"))){%>
+<form class="card editor" method="post" action="<%=base+ruta%>"><h2><%=x.id==0?"Nuevo":"Editar"%> <%=singular%></h2>
+<input type="hidden" name="csrf" value="<%=esc(token)%>"><input type="hidden" name="id" value="<%=x.id%>"><input type="hidden" name="accion" value="guardar">
+<%if(!prov){%><p class="muted">Si el DNI ya pertenece a un usuario, escribe los mismos nombres y apellidos para reutilizar su ficha. No se crea una cuenta de acceso.</p><%}%>
+<div class="form-grid">
+<%if(!prov){%><label>Tipo de documento<select name="tipoDocumento"><option value="DNI" <%=!"RUC".equals(x.tipoDocumento)?"selected":""%>>DNI</option><option value="RUC" <%="RUC".equals(x.tipoDocumento)?"selected":""%>>RUC</option></select></label><%}%>
+<%=campo(prov?"RUC":"Documento (DNI o RUC)","documento",x.documento,"text",11,true)%>
+<%=campo(prov?"Razón social":"Razón social (obligatoria con RUC)","razonSocial",x.razonSocial,"text",150,prov)%>
+<%=campo(prov?"Nombres del contacto":"Nombres / contacto de la empresa","nombres",x.nombres,"text",80,true)%>
+<%=campo(prov?"Apellidos del contacto":"Apellidos / contacto de la empresa","apellidos",x.apellidos,"text",80,true)%>
+<%=campo("Correo principal","correo",x.correo,"email",254,false)%><%=campo("Teléfono principal","telefono",x.telefono,"text",20,false)%>
+<%=campo("Dirección comercial","direccion",x.direccion,"text",255,false)%>
+<label>Distrito<select name="distrito"><option value="">Sin especificar</option><%for(String[] d:(List<String[]>)request.getAttribute("distritosComerciales")){%><option value="<%=esc(d[0])%>" <%=Integer.parseInt(d[0])==x.distritoId?"selected":""%>><%=esc(d[1])%><%="1".equals(d[2])?"":" · Inactivo"%></option><%}%></select></label>
+</div><label class="check"><input type="checkbox" name="activo" <%=x.activo?"checked":""%>>Registro activo</label>
+<div class="form-actions"><button>Guardar <%=singular%></button><a href="<%=base+ruta%>">Cancelar</a></div></form><%}%>
+<form class="toolbar" method="get" action="<%=base+ruta%>"><label>Buscar por nombre o documento<input name="q" maxlength="100" value="<%=esc(request.getAttribute("busquedaComercial"))%>"></label><button>Buscar</button><a href="<%=base+ruta%>">Ver todos</a></form>
+<section class="card"><h2>Registros</h2><p class="muted">Hasta 500 resultados; utiliza la búsqueda para acotar la lista.</p><div class="scroll"><table><thead><tr><th><%=prov?"Proveedor / contacto":"Cliente"%></th><th><%=prov?"RUC":"Documento"%></th><th>Contacto</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
+<%for(Tercero t:lista){%><tr><td><strong><%=esc(t.nombreVisible())%></strong><%if(prov){%><div><%=esc(t.nombres+" "+t.apellidos)%></div><%}%></td><td><%=esc(t.documento)%></td><td><div><%=esc(t.correo)%></div><div><%=esc(t.telefono)%></div></td><td><%=t.activo?"Activo":"Inactivo"%></td><td><a href="<%=base+ruta%>?editar=<%=t.id%>">Editar</a><%if(!prov){%> · <a href="<%=base+ruta%>?copiar=<%=t.id%>">Nuevo con este domicilio</a><%}%><details><summary>Eliminar</summary><p>Eliminará esta ficha comercial. Si tiene operaciones o productos relacionados, utiliza Inactivo.</p><%=accion(base,token,t.id,ruta,"eliminar","Confirmar eliminación")%></details></td></tr><%}if(lista.isEmpty()){%><tr><td colspan="5">No hay registros para esta búsqueda.</td></tr><%}%>
+</tbody></table></div></section>
+<%if(prov){%><section class="card"><details <%=request.getParameter("tsv")!=null?"open":""%>><summary>Importar proveedores desde una hoja de cálculo</summary><p>Copia hasta 50 filas sin encabezado, con columnas separadas por tabulaciones, en este orden: RUC, razón social, nombres del contacto, apellidos, correo, teléfono. Correo y teléfono son opcionales. No incluyas tabulaciones ni saltos dentro de una celda.</p><p>Se crean todos los registros o ninguno. Un RUC repetido cancela la importación completa.</p><form method="post" action="<%=base%>/proveedores"><input type="hidden" name="csrf" value="<%=esc(token)%>"><input type="hidden" name="accion" value="importar"><label>Filas de proveedores<textarea name="tsv" rows="6" maxlength="50000" required><%=esc(request.getParameter("tsv"))%></textarea></label><button>Importar proveedores</button></form></details></section><%}%>

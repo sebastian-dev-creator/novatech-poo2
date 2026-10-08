@@ -12,4 +12,7 @@
 <main id="contenido"><%if(request.getAttribute("aviso")!=null){%><div class="notice" role="status"><%=AppServlet.e(request.getAttribute("aviso"))%></div><%}%>
 <%-- Las vistas son constantes del controlador, nunca parámetros del usuario. --%>
 <%if("dashboard.jsp".equals(vista)){%><jsp:include page="vistas/dashboard.jsp"/><%}else if("usuarios.jsp".equals(vista)){%><jsp:include page="vistas/usuarios.jsp"/><%}else if("roles.jsp".equals(vista)){%><jsp:include page="vistas/roles.jsp"/><%}else if("permisos.jsp".equals(vista)){%><jsp:include page="vistas/permisos.jsp"/><%}else if("contactos.jsp".equals(vista)){%><jsp:include page="vistas/contactos.jsp"/><%}else if("ubicaciones.jsp".equals(vista)){%><jsp:include page="vistas/ubicaciones.jsp"/><%}%>
+<%if("terceros.jsp".equals(vista)){%><jsp:include page="vistas/terceros.jsp"/><%}%>
+<%if("productos.jsp".equals(vista)){%><jsp:include page="vistas/productos.jsp"/><%}%>
+<%if("catalogos-productos.jsp".equals(vista)){%><jsp:include page="vistas/catalogos-productos.jsp"/><%}%>
 </main><footer>NovaTech · Proyecto académico de Programación Orientada a Objetos II</footer></div></div></body></html>

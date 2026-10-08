@@ -1,0 +1,73 @@
+PASS: Anonymous denied /clientes
+PASS: Anonymous denied /proveedores
+PASS: Anonymous denied /productos
+PASS: Anonymous denied /catalogos-productos
+PASS: Admin JSP /clientes
+PASS: Operator GET denied /clientes
+PASS: Operator POST denied /clientes
+PASS: CSRF protected /clientes
+PASS: Admin JSP /proveedores
+PASS: Operator GET denied /proveedores
+PASS: Operator POST denied /proveedores
+PASS: CSRF protected /proveedores
+PASS: Admin JSP /productos
+PASS: Operator GET denied /productos
+PASS: Operator POST denied /productos
+PASS: CSRF protected /productos
+PASS: Admin JSP /catalogos-productos
+PASS: Operator GET denied /catalogos-productos
+PASS: Operator POST denied /catalogos-productos
+PASS: CSRF protected /catalogos-productos
+PASS: Client menu command
+PASS: Product menu denied
+PASS: Client HTTP create
+PASS: Client stored
+PASS: Client actor from session
+PASS: Client HTML escaped
+PASS: Prototype clears identity but copies contact context
+PASS: Prototype independent
+PASS: Prototype used by form
+PASS: Duplicate client rejected
+PASS: Client update and inactive state
+PASS: Client creator preserved on edit by another actor
+PASS: Corporate client HTTP create
+PASS: Corporate RUC round trip
+PASS: Corporate client update
+PASS: Client reuses user identity by DNI
+PASS: Commercial edit cannot overwrite shared user identity
+PASS: Deleting customer preserves shared user
+PASS: Supplier HTTP create
+PASS: Supplier stored
+PASS: Supplier update
+PASS: Supplier creator preserved
+PASS: Adapter rejects invalid shape
+PASS: Atomic import rejects existing RUC
+PASS: Import rolls back earlier rows
+PASS: Adapter HTTP import success
+PASS: Imported supplier stored
+PASS: Category HTTP create
+PASS: Product HTTP create
+PASS: Price precision preserved
+PASS: Product HTML escaped
+PASS: Product actor from session
+PASS: Supplier FK protects referenced product
+PASS: Category FK protects product
+PASS: Product with stock cannot be deleted
+PASS: Invalid price -1
+PASS: Invalid price 1.234
+PASS: Invalid price NaN
+PASS: Invalid price 1000000000
+PASS: Service stock rejected
+PASS: Invalid updates left original intact
+PASS: Valid product update to service
+PASS: Duplicate SKU rejected
+PASS: Missing record /clientes
+PASS: Missing record /proveedores
+PASS: Missing record /productos
+PASS: Negative identifier rejected
+PASS: Catalog allowlist
+PASS: Product HTTP delete
+PASS: Supplier HTTP delete
+PASS: Client HTTP delete
+PASS: Unowned personal record cleaned
+ETAPA 5: ALL CHECKS PASSED

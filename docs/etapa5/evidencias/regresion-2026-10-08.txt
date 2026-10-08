@@ -1,0 +1,159 @@
+PASS: Anonymous redirected
+PASS: JSP login renders
+PASS: CSRF enforced
+PASS: Login redirects to menu
+PASS: Admin menu renders
+PASS: HTTP user create
+PASS: Stored HTML escaped
+PASS: Role options populated
+PASS: HTTP user update
+PASS: Operator login
+PASS: Operator denied user administration
+PASS: Logout invalidates session
+PASS: Failure redirect 1
+PASS: Failure redirect 2
+PASS: Failure redirect 3
+PASS: Closed page renders
+PASS: No access after lock
+PASS: Three failures persist lock
+PASS: Correct password cannot bypass lock
+PASS: HTTP unlock restores access
+PASS: Inactive user denied
+PASS: Roles page renders
+PASS: HTTP user deletion
+Temporary accounts removed.
+PASS: Factory Method creates administrator
+PASS: Factory Method creates operator
+PASS: Menu command redirects
+PASS: Mediator rejects unknown command
+PASS: HTTP location create pais
+PASS: Location JSP pais
+PASS: HTTP location create departamento
+PASS: Location JSP departamento
+PASS: HTTP location create provincia
+PASS: Location JSP provincia
+PASS: HTTP location create distrito
+PASS: Location JSP distrito
+PASS: FK preserves location with children
+PASS: Contact JSP correo
+PASS: HTTP contact create correo
+PASS: Contact update correo
+PASS: Edit JSP persists contact correo
+PASS: Contact ownership protected correo
+PASS: Contact JSP telefono
+PASS: HTTP contact create telefono
+PASS: Contact update telefono
+PASS: Edit JSP persists contact telefono
+PASS: Contact ownership protected telefono
+PASS: Contact JSP direccion
+PASS: HTTP contact create direccion
+PASS: Contact update direccion
+PASS: Edit JSP persists contact direccion
+PASS: Contact ownership protected direccion
+PASS: Duplicate email rejected
+PASS: Invalid phone rejected
+PASS: Mediator hides administrator choices
+PASS: Operator denied /abrir?opcion=usuarios
+PASS: Operator denied /contactos?usuarioId=63
+PASS: Operator denied /ubicaciones
+PASS: HTTP role create
+PASS: Role persisted
+PASS: Role creator comes from authenticated session, not form
+PASS: Editing preserves original role creator
+PASS: Role creation requires an actor
+PASS: Permission JSP renders
+PASS: HTTP permission assignment
+PASS: Granted permission applies without login again
+PASS: Mediator reflects granted permission
+PASS: Only administrator can assign permissions
+PASS: Separate unlock permission enforced
+PASS: HTTP permission revocation
+PASS: Revocation applies to current session
+PASS: Administrator permissions protected
+PASS: User deletion cascades correo
+PASS: User deletion cascades telefono
+PASS: User deletion cascades direccion
+Excel QA accounts and locations removed.
+PASS: Anonymous denied /clientes
+PASS: Anonymous denied /proveedores
+PASS: Anonymous denied /productos
+PASS: Anonymous denied /catalogos-productos
+PASS: Admin JSP /clientes
+PASS: Operator GET denied /clientes
+PASS: Operator POST denied /clientes
+PASS: CSRF protected /clientes
+PASS: Admin JSP /proveedores
+PASS: Operator GET denied /proveedores
+PASS: Operator POST denied /proveedores
+PASS: CSRF protected /proveedores
+PASS: Admin JSP /productos
+PASS: Operator GET denied /productos
+PASS: Operator POST denied /productos
+PASS: CSRF protected /productos
+PASS: Admin JSP /catalogos-productos
+PASS: Operator GET denied /catalogos-productos
+PASS: Operator POST denied /catalogos-productos
+PASS: CSRF protected /catalogos-productos
+PASS: Client menu command
+PASS: Product menu denied
+PASS: Client HTTP create
+PASS: Client stored
+PASS: Client actor from session
+PASS: Client HTML escaped
+PASS: Prototype clears identity but copies contact context
+PASS: Prototype independent
+PASS: Prototype used by form
+PASS: Duplicate client rejected
+PASS: Client update and inactive state
+PASS: Client creator preserved on edit by another actor
+PASS: Corporate client HTTP create
+PASS: Corporate RUC round trip
+PASS: Corporate client update
+PASS: Client reuses user identity by DNI
+PASS: Commercial edit cannot overwrite shared user identity
+PASS: Deleting customer preserves shared user
+PASS: Supplier HTTP create
+PASS: Supplier stored
+PASS: Supplier update
+PASS: Supplier creator preserved
+PASS: Adapter rejects invalid shape
+PASS: Atomic import rejects existing RUC
+PASS: Import rolls back earlier rows
+PASS: Adapter HTTP import success
+PASS: Imported supplier stored
+PASS: Category HTTP create
+PASS: Product HTTP create
+PASS: Price precision preserved
+PASS: Product HTML escaped
+PASS: Product actor from session
+PASS: Fixture puts current supplier beyond first 500
+PASS: Edit keeps supplier beyond first 500 selected
+PASS: Validation error keeps older supplier selected
+PASS: Save with older supplier succeeds
+PASS: Save preserves supplier relation
+PASS: Supplier FK protects referenced product
+PASS: Category FK protects product
+PASS: Product with stock cannot be deleted
+PASS: Invalid price -1
+PASS: Invalid price 1.234
+PASS: Invalid price NaN
+PASS: Invalid price 1000000000
+PASS: Invalid stock -1
+PASS: Invalid stock 1.2345
+PASS: Invalid stock NaN
+PASS: Invalid stock 1000000000
+PASS: Missing category rejected
+PASS: Service stock rejected
+PASS: Invalid updates left original intact
+PASS: Valid product update to service
+PASS: Duplicate SKU rejected
+PASS: Missing record /clientes
+PASS: Missing record /proveedores
+PASS: Missing record /productos
+PASS: Negative identifier rejected
+PASS: Catalog allowlist
+PASS: Product HTTP delete
+PASS: Supplier HTTP delete
+PASS: Client HTTP delete
+PASS: Unowned personal record cleaned
+ETAPA 5: ALL CHECKS PASSED

@@ -9,7 +9,10 @@ public final class MenuMediator {
         new AbrirModuloCommand("inicio","Inicio","/menu",false),
         new AbrirModuloCommand("usuarios","Usuarios","/usuarios",true),
         new AbrirModuloCommand("roles","Roles y acceso","/roles",true),
-        new AbrirModuloCommand("ubicaciones","Ubicaciones","/ubicaciones",true));
+        new AbrirModuloCommand("ubicaciones","Ubicaciones","/ubicaciones",true),
+        new AbrirModuloCommand("clientes","Clientes","/clientes","GESTIONAR_CLIENTES"),
+        new AbrirModuloCommand("proveedores","Proveedores","/proveedores","GESTIONAR_PROVEEDORES"),
+        new AbrirModuloCommand("productos","Productos y servicios","/productos","GESTIONAR_PRODUCTOS"));
     public List<ComandoMenu> opcionesPara(Usuario usuario){
         List<ComandoMenu> visibles=new ArrayList<>();
         for(ComandoMenu opcion:opciones)if(opcion.disponiblePara(usuario))visibles.add(opcion);
