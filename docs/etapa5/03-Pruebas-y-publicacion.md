@@ -2,7 +2,7 @@
 
 ## Estado
 
-Implementado inicialmente el 7 de octubre de 2026 y verificado de nuevo el 8 de octubre, tras corregir la conservación del proveedor al editar productos. **Todavía no se aplicó la migración en Aiven ni se publicó esta etapa en Render.** La producción conserva su versión anterior. Las acciones de publicación de este documento requieren autorización expresa del alumno.
+Implementado inicialmente el 7 de octubre de 2026 y verificado de nuevo el 8 de octubre, tras corregir la conservación del proveedor al editar productos. El 8 de octubre, con autorización expresa del alumno, se respaldó y migró Aiven y Render publicó el commit `132299f` correctamente. El detalle y alcance de las comprobaciones de producción se registra en `05-Publicacion-produccion.md`.
 
 ## Pruebas realizadas
 

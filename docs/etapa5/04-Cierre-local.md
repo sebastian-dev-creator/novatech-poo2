@@ -29,9 +29,9 @@ Maven `package` terminó correctamente, compilando las 44 clases y generando el 
 
 Estas son pruebas Java de integración contra MySQL local en el puerto 23307 y Tomcat local en 18081. No equivalen a una suite JUnit/Selenium ni a pruebas en producción. La revisión visual previa queda documentada en `03-Pruebas-y-publicacion.md`.
 
-## Pendiente para publicar
+## Estado al terminar la revisión local
 
-La implementación y verificación local de la etapa 5 están terminadas dentro del alcance descrito. Falta autorización expresa para respaldar/aplicar la migración en Aiven, subir los cambios que disparan Render y comprobar los CRUD en producción. No se ejecutó ninguna de esas acciones durante este cierre.
+La implementación y verificación local de la etapa 5 terminaron dentro del alcance descrito. En ese momento quedaba pendiente la autorización de publicación. Posteriormente el alumno la concedió: el respaldo, la migración de Aiven y el despliegue en Render se registran en `05-Publicacion-produccion.md`.
 
 La selección de proveedores nuevos sigue limitada a las 500 fichas recientes; ahora editar conserva siempre la relación seleccionada si el proveedor existe. La búsqueda paginada del selector sería una ampliación de capacidad, no un requisito explícito de esta etapa.
 
