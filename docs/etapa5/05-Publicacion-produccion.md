@@ -27,6 +27,6 @@ Se inició sesión como administrador y se comprobaron las altas desde la interf
 - Producto temporal QA-ET5-081026 (id 1), precio 25.50, stock 0 y relación al proveedor de prueba.
 - Consulta directa confirmó la persistencia de los tres registros y usuario_registro=admin.
 
-Las ediciones y eliminaciones todavía no están acreditadas en producción. Las primeras tentativas de edición no persistieron los cambios; deben repetirse y verificarse antes de declarar la prueba completa. La prueba se interrumpió por límite de uso. Al retomarla, Render estaba suspendido y Aiven apagado; se solicitó el encendido del servicio existente, sin repetir la migración.
+Las ediciones y eliminaciones todavía no están acreditadas en producción. Las primeras tentativas de edición no persistieron los cambios; deben repetirse y verificarse antes de declarar la prueba completa. La prueba se interrumpió por límite de uso. Al retomarla, Render estaba suspendido y Aiven apagado; se encendió el servicio existente, sin repetir la migración. Aiven volvió a Running y una consulta SQL confirmó que se conservan los dos usuarios y los tres registros temporales indicados. La sesión web expiró y se solicitó al alumno que vuelva a iniciar sesión.
 
 Pendiente: terminar las ediciones y eliminaciones de estos tres registros, comprobar que se conserven los datos anteriores y registrar evidencia final. No ejecutar el fixture de QA ni las suites masivas contra Aiven.
