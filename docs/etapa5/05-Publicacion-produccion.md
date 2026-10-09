@@ -1,6 +1,6 @@
 # Publicación de la etapa 5 — POO II
 
-Fecha: 8 de octubre de 2026. Autorizada expresamente por el alumno.
+Publicación: 8 de octubre de 2026. Comprobación final: 9 de octubre de 2026. Autorizada expresamente por el alumno.
 
 ## Respaldo y migración
 
@@ -27,6 +27,30 @@ Se inició sesión como administrador y se comprobaron las altas desde la interf
 - Producto temporal QA-ET5-081026 (id 1), precio 25.50, stock 0 y relación al proveedor de prueba.
 - Consulta directa confirmó la persistencia de los tres registros y usuario_registro=admin.
 
-Las ediciones y eliminaciones todavía no están acreditadas en producción. Las primeras tentativas de edición no persistieron los cambios; deben repetirse y verificarse antes de declarar la prueba completa. La prueba se interrumpió por límite de uso. Al retomarla, Render estaba suspendido y Aiven apagado; se encendió el servicio existente, sin repetir la migración. Aiven volvió a Running y una consulta SQL confirmó que se conservan los dos usuarios y los tres registros temporales indicados. La sesión web expiró y se solicitó al alumno que vuelva a iniciar sesión.
+Se completaron las ediciones desde los formularios publicados y se verificaron por consulta SQL:
 
-Pendiente: terminar las ediciones y eliminaciones de estos tres registros, comprobar que se conserven los datos anteriores y registrar evidencia final. No ejecutar el fixture de QA ni las suites masivas contra Aiven.
+- Cliente: correo actualizado a qa.editado@example.invalid.
+- Proveedor: correo actualizado a proveedor.editado@example.invalid.
+- Producto: precio actualizado de 25.50 a 30.75; conservó stock 0 y la relación con el proveedor id 1.
+- Los tres registros conservaron usuario_registro=admin y fechas de actualización iguales o posteriores a las fechas de creación.
+
+Se eliminaron desde la interfaz exclusivamente los registros temporales, en orden producto, proveedor y cliente. El 9 de octubre una consulta final confirmó:
+
+| Tabla / comprobación | Resultado |
+| --- | ---: |
+| Usuarios | 2 |
+| Fichas de datos personales | 2 |
+| Clientes | 0 |
+| Proveedores | 0 |
+| Productos | 0 |
+| Fichas personales temporales de esta prueba | 0 |
+
+Los totales de usuarios y fichas personales volvieron a los valores previos a la prueba. No se ejecutó el fixture de QA ni las suites masivas contra Aiven. Las seis tablas comerciales, catálogos iniciales y permisos permanecen instalados.
+
+## Cierre y alcance de la verificación
+
+La etapa 5 está implementada, publicada y comprobada para los CRUD de clientes, proveedores y productos. La evidencia local previa cubre también servicios, insumos, validaciones, CSRF, permisos de administrador/operador, patrones y regresión: 156 comprobaciones satisfactorias en evidencias/regresion-2026-10-08.txt. La prueba en producción fue una comprobación acotada de los tres CRUD con sesión administradora, persistencia, autoría y limpieza; no repitió toda la suite local ni el inicio de sesión como operador.
+
+El análisis Repository por bloques y los patrones complementarios se encuentran en 02-Analisis-Repository.md. El diseño existente se conserva. Ventas corresponde a etapa 6 y reportería a etapa 7. La aceptación académica de las herramientas de prueba sigue sujeta al criterio del profesor; estas pruebas Java de integración no se presentan como JUnit/Selenium.
+
+Durante una interrupción, Render se suspendió y Aiven apareció apagado. Se recuperó el servicio existente sin repetir la migración. La disponibilidad del alojamiento gratuito es una condición operativa independiente del cierre funcional.

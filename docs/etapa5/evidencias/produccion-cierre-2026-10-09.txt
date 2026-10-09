@@ -1,0 +1,22 @@
+NovaTech POO II - cierre de verificación de producción
+Código desplegado: 132299f591d719acd32fce75644e7857d58ea006
+Render: dep-db3t88gjo6nc73bf6ab0, Deploy succeeded / Live
+
+Altas y ediciones verificadas en formularios y MySQL:
+cliente id 1: correo qa.editado@example.invalid, creador admin
+proveedor id 1: correo proveedor.editado@example.invalid, creador admin
+producto id 1: QA-ET5-081026, precio 30.75, stock 0.000, proveedor 1, creador admin
+fechas actualización >= creación: 1 en los tres casos
+
+Eliminaciones realizadas desde los formularios: producto -> proveedor -> cliente.
+Consulta final de solo lectura el 9 de octubre de 2026:
+usuarios                 2
+datos_personales         2
+clientes                 0
+proveedores              0
+productos                0
+personas_temporales      0
+MySQL exit code: 0
+
+Los tres registros eran datos ficticios creados exclusivamente para esta prueba.
+Las validaciones exhaustivas y permisos de operador están acreditados en QA local, no repetidos en esta comprobación de producción.
