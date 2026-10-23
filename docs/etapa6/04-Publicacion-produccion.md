@@ -14,7 +14,11 @@
 
 ## Código y despliegue
 
-Preparado para publicar tras las 230 comprobaciones locales y el cierre real en Chrome. El estado Live de Render y la verificación posterior se registrarán una vez comprobados; la migración sola no acredita el despliegue.
+Código publicado en `main`: `316b9e8f21cee53a2217ef9dd03cd48106e45f42`. Render lo identifica como el último commit desplegado correctamente; despliegue `dep-dbddkptbedkc73cskukg`.
+
+El login público responde HTTP 200 y contiene el nuevo botón de apertura. Se abrió desde esa página el formulario de acceso en Chrome. La comprobación funcional de ventas con sesión administrativa está pendiente de iniciar sesión.
+
+Se retiró el archivo temporal de credenciales administrativas después de comprobar la migración. El usuario de aplicación conserva sus permisos DML sobre `novatech.*`; no se ampliaron sus privilegios.
 
 Aplicación: https://novatech-poo2.onrender.com
 

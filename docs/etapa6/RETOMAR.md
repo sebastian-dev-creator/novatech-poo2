@@ -1,28 +1,23 @@
 # Retomar NovaTech — etapa 6
 
-Última actualización: 2026-10-22. Curso **PROGRAMACIÓN ORIENTADA A OBJETOS II**.
+Actualizado: 22 de octubre de 2026. Curso Programación Orientada a Objetos II.
 
-## Mensaje para la siguiente sesión
+## Estado vigente
 
-> Continúa NovaTech etapa 6. Primero lee docs/etapa6/RETOMAR.md y README.md del proyecto. Conserva los cambios existentes. La implementación ajustada al profesor y 230 comprobaciones están terminadas. El alumno ya autorizó publicación y pruebas. Consultar 04-Publicacion-produccion.md antes de operar; no repetir migraciones ni modificar datos sin comprobar el estado actual.
-
-## Estado histórico del 9 de octubre (sustituido por 03-Aclaraciones-profesor y 04-Publicacion-produccion)
-
+- El alumno autorizó expresamente los cambios del profesor, respaldo, migración, publicación y comprobación. No volver a solicitar esa misma autorización.
 - Proyecto: `C:/Users/gamep/Downloads/NovaTech-login-usuarios`.
-- Base Git anterior: `0c2b6cc`, etapa 5. Los cambios de etapa 6 están en el disco, sin commit/push/despliegue.
-- Nuevo paquete `app/ventas`, JSP, migración `database/etapa6-ventas.sql`, integración del menú/permiso y protección del tipo de producto con ventas pagadas.
-- Maven package correcto; 63 comprobaciones de etapa 6 y 156 de regresión correctas. Detalle en README y evidencias.
-- SQL de etapa 6 ejecutado dos veces **solo localmente**. Aiven y Render siguen con etapa 5.
-- Una venta ficticia PENDIENTE (ID 6 en esta instancia) con observación `DEMO ETAPA6 LOCAL · Revisión visual, sin transacción real.` se dejó para revisar la pantalla. Pertenece a `demo_etapa5_local`; no cambió stock. No confundirla con datos reales. La demostración anterior de clientes/productos se conservó.
-- Las suites sí retiraron sus registros temporales. No se deben borrar las tablas ni reiniciar el esquema para reanudar.
+- Código publicado: `316b9e8f21cee53a2217ef9dd03cd48106e45f42`; GitHub `sebastian-dev-creator/novatech-poo2`, rama main.
+- Render desplegó ese commit y el login público responde 200 con el botón «Abrir ventana de acceso». URL: https://novatech-poo2.onrender.com
+- Aiven tiene 22 tablas. El respaldo nuevo del 22 de octubre y las dos migraciones están verificados. No volver a ejecutar ni recrear el esquema sin necesidad.
+- 74 comprobaciones de ventas y 156 de regresión aprobadas (230). Cierre real en Chrome y bloqueo tras tres fallos comprobados; fixture local de cierre retirado.
+- Reglas: ventas registradas no se editan ni eliminan, solo se pagan/anulan según estado; pendiente anulada no cambia stock, pagada anulada lo devuelve una vez. Comprobantes académicos.
+- Consultar `04-Publicacion-produccion.md` para el resultado y límites de la comprobación autenticada en producción; no asumirla por el mero estado Live.
+- Los antiguos registros ficticios locales se conservaron; no se limpiaron tablas ni se restauró la base.
+- El archivo temporal de credenciales de migración fue eliminado. No guardar credenciales ni respaldos en Git.
 
-## Qué páginas abrir
+## Documentos
 
-Para continuar trabajando localmente, abrir **http://127.0.0.1:18081/novatech/ventas**. Si el servidor está activo, se puede iniciar sesión en la cuenta ficticia de QA documentada en `docs/etapa5/pruebas/FixtureEtapa5.java`. No usar contraseñas reales de producción para las pruebas.
-
-No hace falta conservar la pestaña para conservar el código. Si aparece un error de conexión después de reiniciar el PC, el agente debe levantar los servicios locales existentes con los parámetros siguientes; no crear una BD nueva. No hay que dejar Aiven/Render abiertos durante trabajo local.
-
-Para comprobar producción se usan: dashboard Aiven del servicio `novatech-db`, dashboard Render `novatech-poo2` y https://novatech-poo2.onrender.com (administrador para la verificación). El alumno autorizó expresamente la etapa 6 el 22 de octubre.
+Leer LEEME.md, README.md de esta carpeta, 02-Analisis-codigo.md, 03-Aclaraciones-profesor.md y 04-Publicacion-produccion.md. La explicación oral del profesor sustituye las dudas del correo del 9 de octubre. Los archivos de evidencia del 9 de octubre son históricos; usar los del 22 para las reglas actuales.
 
 ## Servicios locales y reanudación técnica
 
@@ -67,15 +62,7 @@ Desde la raíz del proyecto, si cambió código:
 
 Git requiere `git -c safe.directory=C:/Users/gamep/Downloads/NovaTech-login-usuarios ...` dentro del repo. Revisar `git status` antes de editar y conservar los cambios ajenos. Cada push puede disparar Render automáticamente; revisar y probar antes.
 
-## Fuentes oficiales
 
-En `C:/Users/gamep/Downloads/`:
+## Alcance pendiente
 
-1. `13.-Módulos básicos para una solución informática_Formas Normales.xlsx`.
-2. `13.1 Etapas del desarrollo de la solución informática.xlsx`.
-
-La etapa 6 está en `Etapas!D29:D33`; ventas, cabecera/detalle y análisis. La correspondencia está en README. No sustituir estas fuentes por el PDF de Gerenciamiento de Datos I.
-
-## Pendiente real
-
-Ver estado vigente y evidencia de publicación en 04-Publicacion-produccion.md. El respaldo nuevo del 22 de octubre y las dos migraciones ya se realizaron. Mantener la etiqueta académica de los comprobantes; SUNAT, pago bancario y reportes de etapa 7 no están implementados aquí.
+La reportería de etapa 7 es una entrega distinta. No hay envío a SUNAT, cobro bancario ni facturación electrónica. Los comprobantes se pueden imprimir como PDF desde el navegador.
