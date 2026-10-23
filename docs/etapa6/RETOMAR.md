@@ -1,6 +1,6 @@
 # Retomar NovaTech — etapa 6
 
-Actualizado: 22 de octubre de 2026. Curso Programación Orientada a Objetos II.
+Actualizado: 23 de octubre de 2026. Curso Programación Orientada a Objetos II.
 
 ## Estado vigente
 
@@ -11,7 +11,7 @@ Actualizado: 22 de octubre de 2026. Curso Programación Orientada a Objetos II.
 - Aiven tiene 22 tablas. El respaldo nuevo del 22 de octubre y las dos migraciones están verificados. No volver a ejecutar ni recrear el esquema sin necesidad.
 - 74 comprobaciones de ventas y 156 de regresión aprobadas (230). Cierre real en Chrome y bloqueo tras tres fallos comprobados; fixture local de cierre retirado.
 - Reglas: ventas registradas no se editan ni eliminan, solo se pagan/anulan según estado; pendiente anulada no cambia stock, pagada anulada lo devuelve una vez. Comprobantes académicos.
-- Consultar `04-Publicacion-produccion.md` para el resultado y límites de la comprobación autenticada en producción; no asumirla por el mero estado Live.
+- Comprobación autenticada en producción completada: B-00000001 pendiente anulada conserva stock 10; B-00000002 pagada descuenta stock a 8 y anulada lo devuelve a 10. Ambas ventas ficticias quedan ANULADAS; cliente y artículo DEMO conservados. Consultar `04-Publicacion-produccion.md` y capturas del 23 de octubre. No repetir estas altas por una interrupción de créditos.
 - Los antiguos registros ficticios locales se conservaron; no se limpiaron tablas ni se restauró la base.
 - El archivo temporal de credenciales de migración fue eliminado. No guardar credenciales ni respaldos en Git.
 
