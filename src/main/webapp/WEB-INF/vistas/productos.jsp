@@ -14,7 +14,7 @@
 <label>Stock actual<input name="stock" type="number" min="0" max="999999999.99" step="0.001" value="<%=esc(f.get("stock"))%>" required></label>
 <label>Stock mínimo<input name="minimo" type="number" min="0" max="999999999.99" step="0.001" value="<%=esc(f.get("minimo"))%>" required></label>
 <label>Descripción<textarea name="descripcion" maxlength="500" rows="3"><%=esc(f.get("descripcion"))%></textarea></label></div>
-<p class="muted">Los servicios no tienen existencias: stock y mínimo deben ser cero. Este formulario mantiene el stock actual; el registro de ventas se incorporará en la etapa 6.</p>
+<p class="muted">Los servicios no tienen existencias: stock y mínimo deben ser cero. Este formulario ajusta el stock actual; las ventas lo descuentan al confirmar el pago y lo devuelven al anular.</p>
 <label class="check"><input type="checkbox" name="activo" <%=!f.getOrDefault("activo","").isEmpty()?"checked":""%>>Artículo activo</label><div class="form-actions"><button>Guardar artículo</button><a href="<%=base%>/productos">Cancelar</a></div></form><%}%>
 <form class="toolbar" method="get" action="<%=base%>/productos"><label>Buscar por código, nombre o tipo<input name="q" maxlength="100" value="<%=esc(request.getAttribute("busquedaComercial"))%>"></label><button>Buscar</button><a href="<%=base%>/productos">Ver todos</a></form>
 <section class="card"><h2>Artículos registrados</h2><p class="muted">Hasta 500 resultados. Los avisos de stock no se aplican a servicios.</p><div class="scroll"><table><thead><tr><th>Código / nombre</th><th>Tipo</th><th>Precio (S/)</th><th>Stock / mínimo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>

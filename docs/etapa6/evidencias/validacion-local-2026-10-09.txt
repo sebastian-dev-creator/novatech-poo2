@@ -1,0 +1,35 @@
+NovaTech POO II — etapa 6 — validación local 2026-10-09
+
+Destino BD: 127.0.0.1:23307/novatech
+Destino HTTP: http://127.0.0.1:18081/novatech
+
+Maven package: BUILD SUCCESS (51 archivos Java).
+Migración etapa6-ventas.sql: dos ejecuciones locales correctas, sin duplicados.
+IntegrationEtapa6: 63 PASS, salida "Stage 6 temporary fixtures removed."
+IntegrationEtapa4 + IntegrationExcel + IntegrationEtapa5: 156 PASS.
+Total: 219 comprobaciones aprobadas.
+
+Casos críticos observados:
+- Permisos administrador/operador y CSRF.
+- Crear, consultar, editar cabecera y detalle y eliminar pendiente por HTTP.
+- Reenvío de formulario no duplica venta, versión obsoleta rechazada.
+- Cantidad cero, precisión excesiva, artículos duplicados y descuento >100 rechazados.
+- Factura requiere cliente RUC; boleta y factura HTML académicas.
+- Descuento con redondeo: subtotal35.88 / descuento3.59 / total32.29.
+- Rollback deja cabecera y líneas originales ante artículo inválido.
+- Pago resta stock; pago repetido, edición/borrado de pagada rechazados.
+- Anulación restaura stock una vez; segundo intento no lo altera.
+- Servicio pagado conserva stock0.
+- Cambio de precio/nombre del catálogo no modifica comprobante histórico.
+- Artículo/cliente referidos no se pueden borrar.
+- Insuficiencia de stock de segunda línea revierte actualización de primera línea.
+- Dos pagos concurrentes por7 unidades sobre stock10: exactamente un éxito, stock3.
+- Regresión de los módulos anteriores aprobada.
+
+Chrome local: formulario de dos líneas, conservación de cabecera, guardado pendiente,
+comprobante B-00000006, subtotal284.90, descuento5%=14.25, total270.65.
+Captura adjunta: ventas-local.png. Venta DEMO local conservada para revisión; no pagada.
+Los fixtures de las suites fueron eliminados por sus bloques finally.
+
+No se ejecutó una migración en Aiven, push ni despliegue en Render de esta etapa.
+No se ejecutaron JUnit/Selenium ni se verificó un PDF exportado.

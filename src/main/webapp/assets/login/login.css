@@ -40,3 +40,5 @@ footer{text-align:center;font-size:11px;color:#94a3b8;line-height:1.7;margin-top
 @media(max-width:480px){body{padding:24px 16px}.access{min-height:0;border-radius:22px}.form-panel{padding:32px 24px}.brand{margin-bottom:32px}h1{font-size:25px}.brand-name{font-size:15px}.brand-caption{font-size:10px}.account-help{margin-top:32px}footer{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
 
+
+[hidden]{display:none!important}

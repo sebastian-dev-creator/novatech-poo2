@@ -24,7 +24,13 @@
         <% if(request.getAttribute("aviso")!=null){ %>
         <div class="notice" role="alert"><%= AppServlet.e(request.getAttribute("aviso")) %></div>
         <% } %>
-        <form method="post" action="<%= base %>/login">
+        <div id="abrir-panel">
+          <p class="help">Abre la ventana de acceso para ingresar. Se cerrará automáticamente si la cuenta queda bloqueada tras tres intentos incorrectos.</p>
+          <button class="submit" type="button" id="abrir-acceso" data-url="<%= base %>/login">Abrir ventana de acceso</button>
+          <p class="help" id="estado-ventana" role="status"></p>
+          <noscript><p class="notice">Activa JavaScript para abrir la ventana de acceso.</p></noscript>
+        </div>
+        <form id="form-acceso" hidden method="post" action="<%= base %>/login">
           <input type="hidden" name="csrf" value="<%= AppServlet.e(session.getAttribute("csrf")) %>">
           <div class="field">
             <label for="usuario">Usuario</label>

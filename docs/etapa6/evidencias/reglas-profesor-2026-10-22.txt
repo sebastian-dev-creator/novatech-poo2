@@ -1,0 +1,75 @@
+PASS: Anonymous sales denied
+PASS: Sales JSP renders
+PASS: New sale form renders
+PASS: Sales menu command
+PASS: Operator GET denied
+PASS: Operator POST denied
+PASS: CSRF required
+PASS: HTTP create header and two lines
+PASS: Pending sale and lines persisted
+PASS: Line rounding HALF_UP (35.88)
+PASS: Percentage discount rounded (3.59)
+PASS: Server total (32.29)
+PASS: Draft does not reserve stock (10.000)
+PASS: Actor taken from session
+PASS: Repeated creation key does not duplicate sale
+PASS: Receipt escapes user input
+PASS: Academic boleta rendered
+PASS: Registered sale edit form rejected
+PASS: Pending receipt offers annulment, never edit/delete
+PASS: Add detail row without saving
+PASS: Remove detail row preserves remaining selection
+PASS: HTTP edit of pending sale rejected
+PASS: Repository edit of pending sale rejected
+PASS: Repository deletion of pending sale rejected
+PASS: HTTP deletion of pending sale rejected
+PASS: Cannot add lines to registered sale
+PASS: Rejected changes preserve version and lines
+PASS: Rejected edit preserves total (32.29)
+PASS: Regular Strategy without discount (20.50)
+PASS: Zero quantity rejected
+PASS: Excess precision rejected
+PASS: Duplicate product rejected
+PASS: Discount over 100 rejected
+PASS: Invoice requires RUC
+PASS: Academic invoice for RUC
+PASS: Service stock stays zero (0.000)
+PASS: Registered sale rejects changed detail
+PASS: Original header survives rollback (32.29)
+PASS: Original detail survives rollback
+PASS: Inactive customer rejected
+PASS: HTTP confirm payment
+PASS: Payment deducts product stock (8.500)
+PASS: Paid state/date persisted
+PASS: Cannot pay twice
+PASS: Duplicate payment leaves stock unchanged (8.500)
+PASS: Paid edit denied
+PASS: Paid deletion denied
+PASS: Type change with paid sale blocked
+PASS: Receipt price preserved after catalog edit (10.25)
+PASS: Receipt name preserved
+PASS: HTTP annul paid sale
+PASS: Annul restores exact stock (10.000)
+PASS: Annul preserves receipt and date
+PASS: Cannot annul twice
+PASS: No double stock return (10.000)
+PASS: Service payment without stock
+PASS: Paid service does not decrement inventory (0.000)
+PASS: Referenced service cannot be deleted
+PASS: Referenced customer cannot be deleted
+PASS: Insufficient second line rejects payment
+PASS: First stock write rolled back atomically (10.000)
+PASS: Failed payment leaves draft pending
+PASS: HTTP annul unpaid sale
+PASS: Unpaid cancellation preserves dates without inventing payment
+PASS: Pending annulment preserves every line
+PASS: Unpaid cancellation does not return stock (10.000)
+PASS: Unpaid cancellation does not increase second stock (10.000)
+PASS: Cannot annul unpaid sale twice
+PASS: Cannot pay annulled sale
+PASS: Cannot delete annulled sale
+PASS: Stale version cannot annul changed sale
+PASS: Concurrent payments cannot oversell
+PASS: Concurrent final stock correct (3.000)
+PASS: Sales search by customer document
+Stage 6 temporary fixtures removed.

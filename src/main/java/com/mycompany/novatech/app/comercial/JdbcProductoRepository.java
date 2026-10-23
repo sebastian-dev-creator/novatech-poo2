@@ -27,8 +27,13 @@ public final class JdbcProductoRepository implements ProductoRepository {
             c.setAutoCommit(false);
             try {
                 int[] anteriores=new int[4];
-                if(x.id>0)try(PreparedStatement p=c.prepareStatement("SELECT id_categoria,id_marca,id_unidad,id_proveedor FROM productos WHERE id=? FOR UPDATE")) {
-                    p.setInt(1,x.id);try(ResultSet r=p.executeQuery()){if(!r.next())throw new IllegalArgumentException("El artículo ya no existe.");for(int i=0;i<4;i++)anteriores[i]=r.getInt(i+1);}
+                if(x.id>0)try(PreparedStatement p=c.prepareStatement("SELECT id_categoria,id_marca,id_unidad,id_proveedor,tipo FROM productos WHERE id=? FOR UPDATE")) {
+                    p.setInt(1,x.id);try(ResultSet r=p.executeQuery()){
+                        if(!r.next())throw new IllegalArgumentException("El artículo ya no existe.");for(int i=0;i<4;i++)anteriores[i]=r.getInt(i+1);
+                        if(!x.tipo.equals(r.getString(5)))try(PreparedStatement v=c.prepareStatement("SELECT 1 FROM detalle_venta d JOIN ventas v ON v.id=d.id_venta WHERE d.id_producto=? AND v.estado='PAGADA' LIMIT 1")){
+                            v.setInt(1,x.id);try(ResultSet venta=v.executeQuery()){if(venta.next())throw new IllegalArgumentException("No puedes cambiar el tipo de un artículo con ventas pagadas. Conserva su tipo para permitir devoluciones.");}
+                        }
+                    }
                 }
                 String[] tablas={"categorias","marcas","unidades_medida","proveedores"};
                 int[] ids={x.categoriaId,x.marcaId,x.unidadId,x.proveedorId};

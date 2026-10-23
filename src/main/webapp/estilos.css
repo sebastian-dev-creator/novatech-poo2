@@ -15,3 +15,16 @@ main{width:100%;max-width:1600px;padding:36px;margin:0 auto;flex:1}h1{font-size:
 .contact-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}.contact-tabs .button{font-size:12px}.form-grid select{max-width:100%}
 
 textarea{width:100%;max-width:100%;padding:10px 12px;border:1px solid #d8e0ed;border-radius:8px;font:inherit;resize:vertical}.sidebar nav{overflow-y:auto;min-height:0}.sidebar{display:flex;flex-direction:column}.sidebar-bottom{margin-top:auto}
+
+/* Solo el comprobante visible al imprimir una venta. */
+@media print {
+ body:has(.receipt) .sidebar, body:has(.receipt) .topbar, body:has(.receipt) footer,
+ body:has(.receipt) .skip-link, body:has(.receipt) main > :not(.receipt),
+ .receipt form, .receipt details, .receipt > a, .receipt > .muted { display: none !important; }
+ body:has(.receipt), body:has(.receipt) .workspace { background: white; margin: 0; }
+ body:has(.receipt) .app-shell { display: block; }
+ body:has(.receipt) main { padding: 0; }
+ .receipt { border: 0; box-shadow: none; color: black; }
+ .receipt .scroll { overflow: visible; }
+ .receipt table { width: 100%; min-width: 0; }
+}
