@@ -20,4 +20,16 @@ La boleta o factura académica se ve desde **Ver detalle**. La factura requiere 
 
 El 5 de noviembre se compiló el WAR con Maven y se aprobaron 94 comprobaciones de etapa 6 y 156 de regresión con Tomcat y MySQL locales. El registro del módulo está en `evidencias/documentos-local-2026-11-05.txt`. Se comprobó desde HTTP el alta, consulta y edición de SOLPED, la conversión, los reintentos, la protección de solicitudes convertidas, la guía emitida, su anulación y el caso de servicios.
 
-El respaldo previo de Aiven del 5 de noviembre contenía las 22 tablas anteriores. Para desplegar esta versión se debe ejecutar primero `database/etapa6-documentos.sql` con una cuenta administradora en Aiven. Luego se publica el WAR en Render y se comprueba allí el recorrido con datos ficticios.
+El respaldo previo contenía las 22 tablas anteriores. Se verificaron en Aiven las nuevas tablas `solped`, `solped_detalle` y `guias`. Se probó la versión publicada en Render correspondiente al commit `a26b564` desde una sesión autenticada.
+
+### Cierre en producción · 5 de noviembre de 2026
+
+Desde Ventas se creó la solicitud SP-1 con una unidad del artículo ficticio DEMO-ET6-231026. La solicitud se convirtió en la boleta académica B-00000004 por S/ 10.25. Se contrastó cada paso en la pantalla y con una consulta de lectura en Aiven.
+
+| Operación | Estado de la venta | Guía | Stock del artículo |
+|---|---|---|---:|
+| Registrar la venta | PENDIENTE | Sin emitir | 8 |
+| Confirmar el pago simulado | PAGADA | G-1 emitida | 7 |
+| Anular la venta | ANULADA | G-1 anulada | 8 |
+
+La venta y la guía permanecen vinculadas para consultar el historial. El artículo recuperó sus ocho unidades. Con este recorrido quedan verificados los puntos 13 y 14 de la etapa 6. [Captura del resultado en NovaTech](evidencias/cierre-produccion-2026-11-05.png).

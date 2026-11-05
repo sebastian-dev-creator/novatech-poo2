@@ -1,6 +1,6 @@
 # Etapa 6 — Ventas (POO II)
 
-Actualización del 5 de noviembre: [SOLPED, guía y Observer](05-SOLPED-guia-y-Observer.md). Las evidencias de octubre corresponden a la versión previa.
+Etapa 6 cerrada y verificada en producción el 5 de noviembre de 2026. Evidencia y análisis: [SOLPED, guía y Observer](05-SOLPED-guia-y-Observer.md). Las evidencias de octubre corresponden a la versión previa.
 
 
 Revisión: 22 de octubre de 2026. Ajustada a las aclaraciones del profesor; 230 comprobaciones locales aprobadas. Migración de Aiven realizada tras respaldo nuevo; publicación y comprobación documentadas en `04-Publicacion-produccion.md`. Véase también [Aclaraciones del profesor](03-Aclaraciones-profesor.md).

@@ -1,11 +1,11 @@
 # Retomar NovaTech — etapa 6
 
-Actualización del 5 de noviembre: [SOLPED, guía y Observer](05-SOLPED-guia-y-Observer.md). Las evidencias de octubre corresponden a la versión previa.
+Etapa 6 cerrada y verificada en producción el 5 de noviembre de 2026. Evidencia y análisis: [SOLPED, guía y Observer](05-SOLPED-guia-y-Observer.md). Las evidencias de octubre corresponden a la versión previa.
 
 
 Actualizado: 23 de octubre de 2026. Curso Programación Orientada a Objetos II.
 
-## Estado vigente
+## Estado al 23 de octubre (histórico)
 
 - El alumno autorizó expresamente los cambios del profesor, respaldo, migración, publicación y comprobación. No volver a solicitar esa misma autorización.
 - Proyecto: `C:/Users/gamep/Downloads/NovaTech-login-usuarios`.
