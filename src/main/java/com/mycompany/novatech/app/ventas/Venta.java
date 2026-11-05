@@ -5,6 +5,8 @@ import java.util.*;
 /** Cabecera y detalle de una operación; los importes los calcula el servidor. */
 public final class Venta {
     public int id,clienteId,usuarioId,version;
+    public int solicitudId,guiaId;
+    public String fechaGuia,estadoGuia;
     public String clave=UUID.randomUUID().toString(),tipo="BOLETA",estado="PENDIENTE",medioPago="",observacion="";
     public String clienteNombre="",clienteDocumento="",creador="",actualizador="",fecha="",fechaPago="",fechaAnulacion="";
     public BigDecimal porcentaje=BigDecimal.ZERO,subtotal=BigDecimal.ZERO,descuento=BigDecimal.ZERO,total=BigDecimal.ZERO;

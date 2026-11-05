@@ -22,6 +22,41 @@ public class IntegrationEtapa6 extends IntegrationEtapa4 {
  }
  static HttpResponse<String> action(HttpClient h,String t,Venta v,String action)throws Exception{return post(h,"/ventas","csrf",t,"accion",action,"id",""+v.id,"version",""+v.version,"medio","EFECTIVO");}
  static int savedId(HttpResponse<String> r){return Integer.parseInt(r.headers().firstValue("location").orElseThrow().split("ver=")[1]);}
+ static int nuevaSolicitud(HttpClient h,String csrf,int cliente,int producto,String clave)throws Exception {
+  HttpResponse<String> respuesta=post(h,"/ventas","csrf",csrf,"accion","solicitar","clave",clave,"cliente",""+cliente,
+      "tipo","BOLETA","porcentaje","0","producto",""+producto,"cantidad","1");
+  ok(respuesta.statusCode()==302,"Alta SOLPED por HTTP");
+  return Integer.parseInt(respuesta.headers().firstValue("location").orElseThrow().split("solicitud=")[1]);
+ }
+ static void documentos(HttpClient h,String t,int cliente,int producto,JdbcVentaRepository ventas)throws Exception {
+  String clave=UUID.randomUUID().toString();
+  int id=nuevaSolicitud(h,t,cliente,producto,clave);
+  ok(id==nuevaSolicitud(h,t,cliente,producto,clave),"Reenvío conserva el mismo pedido");
+  String solicitud=""+id;
+  ok(get(h,"/ventas?solicitud="+id).body().contains("Generar venta pendiente"),"Solicitud abierta con detalle y conversión");
+  ok(get(h,"/ventas?solicitud="+id+"&editarPedido=1").body().contains("Editar solicitud"),"Formulario de edición");
+  ok(post(h,"/ventas","csrf",t,"accion","solicitar","solicitud",solicitud,"versionPedido","1","clave",clave,"cliente",""+cliente,
+      "tipo","BOLETA","porcentaje","10","producto",""+producto,"cantidad","2").statusCode()==302,"Editar líneas y cabecera abiertas");
+  ok(post(h,"/ventas","csrf",t,"accion","convertir","solicitud",solicitud,"versionPedido","1").statusCode()==400,"Rechazar conversión de versión obsoleta");
+  String[] convertir={"csrf",t,"accion","convertir","solicitud",solicitud,"versionPedido","2"};
+  int venta=savedId(post(h,"/ventas",convertir));
+  ok(venta==savedId(post(h,"/ventas",convertir)),"Reintento devuelve una sola venta");
+  Venta v=ventas.buscar(venta);
+  ok(v.solicitudId==id && v.detalles.size()==1 && v.guiaId==0,"Solicitud vinculada y pendiente sin guía");
+  same(v.total,"18.45","La conversión usa las cantidades y descuento de la solicitud");
+  ok(post(h,"/ventas","csrf",t,"accion","eliminarPedido","solicitud",solicitud,"versionPedido","3").statusCode()==400,"Proteger solicitud convertida");
+  ok(action(h,t,v,"pagar").statusCode()==302,"Pagar venta de SOLPED");
+  v=ventas.buscar(venta);
+  ok(v.guiaId>0 && "EMITIDA".equals(v.estadoGuia),"Observer crea guía");
+  ok(get(h,"/ventas?ver="+venta).body().contains("Guía académica G-"+v.guiaId),"Guía visible en el comprobante");
+  int guia=v.guiaId;
+  ok(action(h,t,v,"anular").statusCode()==302,"Anular venta con guía");
+  v=ventas.buscar(venta);
+  ok(v.guiaId==guia && "ANULADA".equals(v.estadoGuia),"Observer anula la misma guía");
+  int abierto=nuevaSolicitud(h,t,cliente,producto,UUID.randomUUID().toString());
+  ok(post(h,"/ventas","csrf",t,"accion","eliminarPedido","solicitud",""+abierto,"versionPedido","1").statusCode()==302,"Eliminar solo la solicitud abierta");
+  ok(get(h,"/ventas?solicitud="+abierto).statusCode()==400,"Solicitud eliminada no consultable");
+ }
  public static void main(String[] args)throws Exception {
   localOnly();String suffix=""+System.currentTimeMillis(),actor="qa_v_"+suffix,operator="qa_vo_"+suffix,pw=UUID.randomUUID().toString();
   JdbcUsuarioRepository users=new JdbcUsuarioRepository();JdbcClienteRepository clients=new JdbcClienteRepository();JdbcProductoRepository products=new JdbcProductoRepository();JdbcVentaRepository sales=new JdbcVentaRepository();
@@ -49,6 +84,7 @@ public class IntegrationEtapa6 extends IntegrationEtapa4 {
    ok(detail.contains("BOLETA")&&detail.contains("Sin validez tributaria"),"Academic boleta rendered");
    ok(get(h,"/ventas?editar="+v.id).statusCode()==400,"Registered sale edit form rejected");
    ok(!detail.contains("Editar cabecera")&&!detail.contains("Eliminar pendiente")&&detail.contains("Confirmar anulación"),"Pending receipt offers annulment, never edit/delete");
+   documentos(h,t,cid,prod,sales);
    String add=post(h,"/ventas","csrf",t,"accion","agregar","id","0","clave",UUID.randomUUID().toString(),"producto",""+prod,"cantidad","2").body();ok(add.contains("Cantidad 2"),"Add detail row without saving");
    String remove=post(h,"/ventas","csrf",t,"quitar","0","id","0","producto",""+prod,"cantidad","2","producto",""+svc,"cantidad","1").body();ok(!remove.contains("Cantidad 2")&&remove.contains("value=\""+svc+"\" selected"),"Remove detail row preserves remaining selection");
    int oldVersion=stored.version;stored.detalles.remove(1);stored.detalles.get(0).cantidad=n("2");stored.porcentaje=n("0");
@@ -74,6 +110,7 @@ public class IntegrationEtapa6 extends IntegrationEtapa4 {
    products.guardar(new Producto.Builder().identidad(p.id,p.codigo,"Nombre nuevo").clasificacion(p.tipo,cat,0,unit,0).valores("99","8.5","0").build(),actor);same(sales.buscar(paid.id).detalles.get(0).precio,"10.25","Receipt price preserved after catalog edit");ok(sales.buscar(paid.id).detalles.get(0).nombre.contains("<script>"),"Receipt name preserved");
    ok(action(h,t,paid,"anular").statusCode()==302,"HTTP annul paid sale");Venta cancelled=sales.buscar(paid.id);same(products.buscar(prod).stock,"10","Annul restores exact stock");ok(cancelled.estado.equals("ANULADA")&&cancelled.fechaAnulacion!=null,"Annul preserves receipt and date");ok(action(h,t,cancelled,"anular").statusCode()==400,"Cannot annul twice");same(products.buscar(prod).stock,"10","No double stock return");
    Venta service=sales.buscar(invoice.id);ok(action(h,t,service,"pagar").statusCode()==302,"Service payment without stock");same(products.buscar(svc).stock,"0","Paid service does not decrement inventory");rejects(()->products.eliminar(svc),"Referenced service cannot be deleted");rejects(()->clients.eliminar(empresaId),"Referenced customer cannot be deleted");
+   ok(sales.buscar(invoice.id).guiaId==0,"Factura pagada de servicios sin guía física");
    Venta shortage=sale(cid,prod,"1");shortage.detalles.add(new DetalleVenta(ins,n("11")));sales.guardar(shortage,aid,actor);rejects(()->sales.pagar(shortage.id,1,"EFECTIVO",actor),"Insufficient second line rejects payment");same(products.buscar(prod).stock,"10","First stock write rolled back atomically");ok(sales.buscar(shortage.id).estado.equals("PENDIENTE"),"Failed payment leaves draft pending");
    Venta pending=sales.buscar(shortage.id);
    ok(action(h,t,pending,"anular").statusCode()==302,"HTTP annul unpaid sale");
@@ -90,6 +127,8 @@ public class IntegrationEtapa6 extends IntegrationEtapa4 {
    try{List<Future<Boolean>> results=new ArrayList<>();for(Venta x:Arrays.asList(a,b))results.add(pool.submit(()->{go.await();try{sales.pagar(x.id,1,"EFECTIVO",actor);return true;}catch(IllegalArgumentException e){return false;}}));go.countDown();int successes=0;for(Future<Boolean> r:results)if(r.get(15,TimeUnit.SECONDS))successes++;ok(successes==1,"Concurrent payments cannot oversell");same(products.buscar(ins).stock,"3","Concurrent final stock correct");}finally{pool.shutdownNow();}
    ok(get(h,"/ventas?q="+cl.documento).body().contains("Ver detalle"),"Sales search by customer document");
   }finally{
+   try(PreparedStatement p=c.prepareStatement("DELETE g FROM guias g JOIN ventas v ON v.id=g.id_venta WHERE v.usuario_registro=?")){p.setString(1,actor);p.executeUpdate();}
+   try(PreparedStatement p=c.prepareStatement("DELETE s FROM solped s JOIN usuarios u ON u.id_usuario=s.id_usuario WHERE u.nombre_usuario=?")){p.setString(1,actor);p.executeUpdate();}
    try(PreparedStatement p=c.prepareStatement("DELETE FROM ventas WHERE usuario_registro=?")){p.setString(1,actor);p.executeUpdate();}
    try(PreparedStatement p=c.prepareStatement("DELETE FROM productos WHERE usuario_registro=?")){p.setString(1,actor);p.executeUpdate();}
    for(int x:clientIds)clients.eliminar(x);

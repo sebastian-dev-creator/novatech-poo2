@@ -10,7 +10,7 @@ import java.util.*;
 
 @WebServlet("/ventas")
 public final class VentasServlet extends HttpServlet {
-    private final VentaRepository ventas=new JdbcVentaRepository();
+    private final JdbcVentaRepository ventas=new JdbcVentaRepository();
     private final ClienteRepository clientes=new JdbcClienteRepository();
     private final ProductoRepository productos=new JdbcProductoRepository();
     private String valor(HttpServletRequest q,String key){String s=q.getParameter(key);return s==null?"":s.trim();}
@@ -20,15 +20,21 @@ public final class VentasServlet extends HttpServlet {
         boolean enviado=Boolean.TRUE.equals(q.getAttribute("formEnviado"));
         int editar=id(q,"editar"),ver=id(q,"ver");Venta actual=null;
         if(editar>0)throw new IllegalArgumentException("Las ventas registradas no se editan. Utiliza la anulación.");
-        if(editar>0||ver>0){actual=ventas.buscar(editar>0?editar:ver);if(actual==null){s.sendError(404);return;}if(editar>0)EstadoVenta.de(actual.estado).editar();}
-        if(enviado||editar>0||q.getParameter("nuevo")!=null) {
+        if(ver>0){actual=ventas.buscar(ver);if(actual==null){s.sendError(404);return;}}
+        int solicitud=id(q,"solicitud");
+        Solicitudes.Pedido pedido=solicitud>0 ? Solicitudes.transaccion(c -> Solicitudes.cargar(c,solicitud,false)) : null;
+        boolean editarPedido=q.getParameter("editarPedido")!=null;
+        if(editarPedido && (pedido==null || pedido.ventaId!=0))throw new IllegalArgumentException("Selecciona una solicitud abierta.");
+        q.setAttribute("pedido",pedido);
+        q.setAttribute("pedidos",Solicitudes.listar());
+        if(enviado||editarPedido||q.getParameter("nuevo")!=null) {
             Map<String,String> f;List<String[]> lineas=new ArrayList<>();
             if(enviado){f=new HashMap<>();for(String k:new String[]{"id","version","clave","cliente","tipo","porcentaje","observacion"})f.put(k,valor(q,k));
                 String[] ps=q.getParameterValues("producto"),cs=q.getParameterValues("cantidad");
                 if(ps!=null&&cs!=null&&ps.length==cs.length&&ps.length<=50)for(int i=0;i<ps.length;i++)lineas.add(new String[]{ps[i],cs[i]});
                 if(q.getParameter("quitar")!=null){int n=id(q,"quitar");if(n<lineas.size())lineas.remove(n);}
                 if("agregar".equals(valor(q,"accion"))&&lineas.size()<50)lineas.add(new String[]{"","1"});
-            }else{Venta v=actual==null?new Venta():actual;f=cabecera(v);for(DetalleVenta d:v.detalles)lineas.add(new String[]{""+d.productoId,d.cantidad.toPlainString()});}
+            }else{Venta v=editarPedido?pedido.datos:new Venta();f=cabecera(v);for(DetalleVenta d:v.detalles)lineas.add(new String[]{""+d.productoId,d.cantidad.toPlainString()});}
             if(lineas.isEmpty())lineas.add(new String[]{"","1"});
             List<Cliente> opcionesCliente=new ArrayList<>(clientes.listar(""));List<Producto> opcionesProducto=new ArrayList<>(productos.listar(""));
             int elegido=0;try{elegido=Validacion.id(f.get("cliente"));}catch(IllegalArgumentException ignored){}
@@ -52,13 +58,19 @@ public final class VentasServlet extends HttpServlet {
             Usuario u=(Usuario)q.getAttribute("actual");String accion=valor(q,"accion");int id=id(q,"id"),version=id(q,"version");
             if(id>0 && (q.getParameter("quitar")!=null || Arrays.asList("guardar","agregar","eliminar").contains(accion)))throw new IllegalArgumentException("Las ventas registradas no se editan ni se eliminan. Utiliza la anulación.");
             if(q.getParameter("quitar")!=null||"agregar".equals(accion)){q.setAttribute("formEnviado",true);mostrar(q,s);return;}
-            if("guardar".equals(accion)){
+            if("guardar".equals(accion)||"solicitar".equals(accion)){
                 q.setAttribute("formEnviado",true);Venta v=new Venta();v.id=id;v.version=version;v.clave=valor(q,"clave");v.clienteId=id(q,"cliente");v.tipo=valor(q,"tipo");v.observacion=valor(q,"observacion");v.porcentaje=Validacion.decimal(valor(q,"porcentaje"),"Descuento",2);
                 String[] ps=q.getParameterValues("producto"),cs=q.getParameterValues("cantidad");
                 if(ps==null||cs==null||ps.length!=cs.length||ps.length>50)throw new IllegalArgumentException("Revisa las líneas de la venta (máximo 50).");
                 for(int i=0;i<ps.length;i++){if(ps[i].isBlank())throw new IllegalArgumentException("Selecciona un artículo en cada línea o retira las líneas vacías.");v.detalles.add(new DetalleVenta(Validacion.id(ps[i]),Validacion.decimal(cs[i],"Cantidad",3)));}
+                if ("solicitar".equals(accion)) {
+                    int pedido=ventas.guardarSolicitud(v,u.id,id(q,"solicitud"),id(q,"versionPedido"));
+                    s.sendRedirect(q.getContextPath()+"/ventas?solicitud="+pedido);return;
+                }
                 id=ventas.guardar(v,u.id,u.username);
-            }else if("pagar".equals(accion))ventas.pagar(id,version,valor(q,"medio"),u.username);
+            }else if("convertir".equals(accion))id=ventas.convertir(id(q,"solicitud"),id(q,"versionPedido"),u.id,u.username);
+            else if("eliminarPedido".equals(accion))Solicitudes.eliminar(id(q,"solicitud"),id(q,"versionPedido"));
+            else if("pagar".equals(accion))ventas.pagar(id,version,valor(q,"medio"),u.username);
             else if("anular".equals(accion))ventas.anular(id,version,u.username);
             else if("eliminar".equals(accion))throw new IllegalArgumentException("Las ventas no se eliminan. Utiliza la anulación.");
             else throw new IllegalArgumentException("Acción inválida.");

@@ -22,7 +22,14 @@ public final class JdbcVentaRepository implements VentaRepository {
         try(PreparedStatement p=c.prepareStatement("SELECT * FROM ventas WHERE id=?"+(bloquear?" FOR UPDATE":""))){p.setInt(1,id);try(ResultSet r=p.executeQuery()){if(!r.next())return null;v=cabecera(r);}}
         try(PreparedStatement p=c.prepareStatement("SELECT * FROM detalle_venta WHERE id_venta=? ORDER BY id_producto")){p.setInt(1,id);try(ResultSet r=p.executeQuery()){while(r.next()){
             DetalleVenta d=new DetalleVenta(r.getInt("id_producto"),r.getBigDecimal("cantidad"));d.codigo=r.getString("codigo");d.nombre=r.getString("nombre");d.tipo=r.getString("tipo");d.precio=r.getBigDecimal("precio_unitario");d.subtotal=r.getBigDecimal("subtotal");v.detalles.add(d);
-        }}}return v;
+        }}}
+        try (PreparedStatement p = c.prepareStatement("SELECT (SELECT id FROM solped WHERE id_venta=?) solicitud,g.id,g.fecha,g.estado FROM (SELECT 1) x LEFT JOIN guias g ON g.id_venta=?")) {
+            p.setInt(1,id); p.setInt(2,id);
+            try (ResultSet r = p.executeQuery()) {
+                if (r.next()) { v.solicitudId=r.getInt(1); v.guiaId=r.getInt(2); v.fechaGuia=r.getString(3); v.estadoGuia=r.getString(4); }
+            }
+        }
+        return v;
     }
     @Override public Venta buscar(int id)throws SQLException {
         // Una lectura coherente evita mezclar cabecera anterior con líneas nuevas.
@@ -47,19 +54,72 @@ public final class JdbcVentaRepository implements VentaRepository {
             }
         }
     }
-    @Override public int guardar(Venta v,int usuarioId,String actor)throws SQLException {
+    private final EventosVenta eventos = new EventosVenta();
+
+    public JdbcVentaRepository() {
+        eventos.suscribir(EventosVenta::actualizarGuia);
+    }
+
+    private void validar(Venta v) {
         if(v.id!=0)throw new IllegalArgumentException("Las ventas registradas no se editan. Anula la venta y registra una nueva.");
         if(v.clienteId<=0||!Arrays.asList("BOLETA","FACTURA").contains(v.tipo))throw new IllegalArgumentException("Selecciona cliente y comprobante válidos.");
         if(v.clave==null||!v.clave.matches("[0-9a-fA-F-]{36}"))throw new IllegalArgumentException("Formulario inválido. Abre una venta nueva.");
-        CalculoVenta calculo=CalculoVenta.para(v.porcentaje);v.observacion=Validacion.texto(v.observacion,"Observación",500,false);
+        CalculoVenta.para(v.porcentaje);v.observacion=Validacion.texto(v.observacion,"Observación",500,false);
         if(v.detalles.isEmpty()||v.detalles.size()>50)throw new IllegalArgumentException("Incluye entre 1 y 50 artículos.");
         Set<Integer> ids=new HashSet<>();for(DetalleVenta d:v.detalles){
             if(d.productoId<=0||!ids.add(d.productoId))throw new IllegalArgumentException("Selecciona artículos distintos; agrupa sus cantidades.");
             if(d.cantidad==null||d.cantidad.signum()<=0||d.cantidad.scale()>3||d.cantidad.compareTo(new BigDecimal("999999999.99"))>0)throw new IllegalArgumentException("Cantidad: mayor que cero y hasta tres decimales.");
         }
         v.detalles.sort(Comparator.comparingInt(d->d.productoId));
-        try(Connection c=abrir()) {c.setAutoCommit(false);try {
-            try(PreparedStatement p=c.prepareStatement("SELECT id,id_usuario FROM ventas WHERE clave_creacion=?")){p.setString(1,v.clave);try(ResultSet r=p.executeQuery()){if(r.next()){if(r.getInt(2)!=usuarioId)throw new IllegalArgumentException("Formulario de otra sesión.");return r.getInt(1);}}}
+    }
+
+    int guardarSolicitud(Venta datos, int usuario, int solicitud, int version) throws SQLException {
+        validar(datos);
+        return Solicitudes.transaccion(c -> {
+            cliente(c,datos,false);
+            for (DetalleVenta d : datos.detalles) {
+                try (PreparedStatement p = c.prepareStatement("SELECT activo FROM productos WHERE id=? FOR SHARE")) {
+                    p.setInt(1,d.productoId);
+                    try (ResultSet r = p.executeQuery()) {
+                        if (!r.next() || !r.getBoolean(1)) throw new IllegalArgumentException("Selecciona artículos activos.");
+                    }
+                }
+            }
+            return Solicitudes.guardar(c,datos,usuario,solicitud,version);
+        });
+    }
+
+    int convertir(int solicitud, int version, int usuario, String actor) throws SQLException {
+        return Solicitudes.transaccion(c -> convertir(c,solicitud,version,usuario,actor));
+    }
+
+    private int convertir(Connection c,int solicitud,int version,int usuario,String actor) throws SQLException {
+        Solicitudes.Pedido pedido = Solicitudes.cargar(c,solicitud,true);
+        if (pedido.ventaId != 0) return pedido.ventaId;
+        Solicitudes.editable(pedido,version);
+        Venta v = pedido.datos;
+        validar(v);
+        int id = registrarVenta(c,v,usuario,actor);
+        try (PreparedStatement p = c.prepareStatement("UPDATE solped SET id_venta=?,version=version+1 WHERE id=?")) {
+            p.setInt(1,id); p.setInt(2,solicitud); p.executeUpdate();
+        }
+        return id;
+    }
+
+    // Entrada compatible: registra primero la solicitud y la convierte en la misma transacción.
+    @Override public int guardar(Venta v,int usuarioId,String actor) throws SQLException {
+        validar(v);
+        int id = Solicitudes.transaccion(c -> {
+            int solicitud = Solicitudes.guardar(c,v,usuarioId,0,0);
+            Solicitudes.Pedido pedido = Solicitudes.cargar(c,solicitud,true);
+            return convertir(c,solicitud,pedido.version,usuarioId,actor);
+        });
+        v.id = id;
+        return id;
+    }
+
+    private int registrarVenta(Connection c,Venta v,int usuarioId,String actor) throws SQLException {
+            CalculoVenta calculo = CalculoVenta.para(v.porcentaje);
             cliente(c,v,true);v.subtotal=BigDecimal.ZERO.setScale(2);
             // Orden de bloqueo por id: dos ventas nunca bloquean productos en orden inverso.
             for(DetalleVenta d:v.detalles)try(PreparedStatement p=c.prepareStatement("SELECT codigo,nombre,tipo,precio,activo FROM productos WHERE id=? FOR UPDATE")) {
@@ -79,8 +139,7 @@ public final class JdbcVentaRepository implements VentaRepository {
             try(PreparedStatement p=c.prepareStatement("INSERT INTO detalle_venta(id_venta,id_producto,codigo,nombre,tipo,cantidad,precio_unitario,subtotal) VALUES (?,?,?,?,?,?,?,?)")) {
                 for(DetalleVenta d:v.detalles){p.setInt(1,v.id);p.setInt(2,d.productoId);p.setString(3,d.codigo);p.setString(4,d.nombre);p.setString(5,d.tipo);p.setBigDecimal(6,d.cantidad);p.setBigDecimal(7,d.precio);p.setBigDecimal(8,d.subtotal);p.addBatch();}p.executeBatch();
             }
-            c.commit();return v.id;
-        }catch(SQLException|RuntimeException e){c.rollback();throw e;}}
+            return v.id;
     }
     @Override public void pagar(int id,int version,String medio,String actor)throws SQLException {
         if(!Arrays.asList("EFECTIVO","TARJETA","TRANSFERENCIA").contains(medio))throw new IllegalArgumentException("Selecciona el medio de pago.");
@@ -108,6 +167,7 @@ public final class JdbcVentaRepository implements VentaRepository {
             }
             String sql=anular?"UPDATE ventas SET estado=?,fecha_anulacion=CURRENT_TIMESTAMP,usuario_actualizacion=?,version=version+1 WHERE id=?":"UPDATE ventas SET estado=?,fecha_pago=CURRENT_TIMESTAMP,usuario_actualizacion=?,version=version+1,medio_pago=? WHERE id=?";
             try(PreparedStatement p=c.prepareStatement(sql)){p.setString(1,nuevo);p.setString(2,actor);if(anular)p.setInt(3,id);else {p.setString(3,medio);p.setInt(4,id);}p.executeUpdate();}
+            eventos.publicar(c,v,nuevo);
             c.commit();
         }catch(SQLException|RuntimeException e){c.rollback();throw e;}}
     }

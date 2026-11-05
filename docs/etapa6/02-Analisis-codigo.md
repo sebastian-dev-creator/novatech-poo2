@@ -1,5 +1,8 @@
 # Análisis por bloques — módulo de ventas
 
+Actualización del 5 de noviembre: [SOLPED, guía y Observer](05-SOLPED-guia-y-Observer.md). Las evidencias de octubre corresponden a la versión previa.
+
+
 Entrega para `Etapas!D33` del Excel oficial de POO II. Las rutas de código se entienden desde la raíz del proyecto.
 
 ## 1. Modelo relacional y entidades

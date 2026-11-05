@@ -1,5 +1,8 @@
 # Retomar NovaTech — etapa 6
 
+Actualización del 5 de noviembre: [SOLPED, guía y Observer](05-SOLPED-guia-y-Observer.md). Las evidencias de octubre corresponden a la versión previa.
+
+
 Actualizado: 23 de octubre de 2026. Curso Programación Orientada a Objetos II.
 
 ## Estado vigente
