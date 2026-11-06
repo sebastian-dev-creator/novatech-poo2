@@ -21,14 +21,25 @@ public final class ComprasServlet extends HttpServlet {
             int ver=Validacion.id(q.getParameter("ver"));
             if(ver>0)q.setAttribute("compra",repository.buscar(ver));
             if(q.getParameter("nuevo")!=null) {
-                q.setAttribute("proveedoresCompra",new JdbcProveedorRepository().listar(""));
-                q.setAttribute("productosCompra",new JdbcProductoRepository().listar(""));
+                q.setAttribute("proveedoresCompra",proveedoresElegidos(q));
+                q.setAttribute("productosCompra",productosElegidos(q));
                 q.setAttribute("claveCompra",q.getAttribute("claveCompra")==null?UUID.randomUUID().toString():q.getAttribute("claveCompra"));
             }
             q.setAttribute("titulo","Compras");q.setAttribute("vista","compras.jsp");q.setAttribute("rutaActual","/compras");
             q.getRequestDispatcher("/WEB-INF/pagina.jsp").forward(q,s);
         }catch(IllegalArgumentException e){s.sendError(400,e.getMessage());}
         catch(SQLException e){getServletContext().log("Consultar compras",e);s.sendError(503,"No se pudo consultar compras.");}
+    }
+    private java.util.List<Proveedor> proveedoresElegidos(HttpServletRequest q)throws SQLException {
+        java.util.List<Proveedor> r=new java.util.ArrayList<>();
+        int id=Validacion.id(q.getParameter("proveedor"));
+        if(id>0){Proveedor p=new JdbcProveedorRepository().buscar(id);if(p!=null)r.add(p);}return r;
+    }
+    private java.util.List<Producto> productosElegidos(HttpServletRequest q)throws SQLException {
+        java.util.List<Producto> r=new java.util.ArrayList<>();java.util.Set<Integer> ids=new java.util.HashSet<>();
+        String[] ps=q.getParameterValues("producto");
+        if(ps!=null)for(int i=0;i<Math.min(ps.length,20);i++){int id=Validacion.id(ps[i]);if(id>0&&ids.add(id)){Producto p=new JdbcProductoRepository().buscar(id);if(p!=null)r.add(p);}}
+        return r;
     }
     @Override protected void doPost(HttpServletRequest q,HttpServletResponse s)throws IOException,ServletException {
         try {

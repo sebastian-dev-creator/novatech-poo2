@@ -1,0 +1,842 @@
+[
+  {
+    "codigo": "NT-AUD-001",
+    "nombre": "Auriculares inalámbricos Aurex Air Lite",
+    "precio": 99.9,
+    "costo": 61.94,
+    "stock": 13
+  },
+  {
+    "codigo": "NT-AUD-002",
+    "nombre": "Auriculares inalámbricos Aurex Air Pro",
+    "precio": 117.72,
+    "costo": 72.99,
+    "stock": 14
+  },
+  {
+    "codigo": "NT-AUD-003",
+    "nombre": "Auriculares inalámbricos Aurex Studio ANC",
+    "precio": 135.54,
+    "costo": 84.03,
+    "stock": 15
+  },
+  {
+    "codigo": "NT-AUD-004",
+    "nombre": "Auriculares inalámbricos Aurex Sport Fit",
+    "precio": 153.36,
+    "costo": 95.08,
+    "stock": 16
+  },
+  {
+    "codigo": "NT-AUD-005",
+    "nombre": "Auriculares inalámbricos Aurex Urban Mini",
+    "precio": 171.18,
+    "costo": 106.13,
+    "stock": 17
+  },
+  {
+    "codigo": "NT-AUD-006",
+    "nombre": "Auriculares inalámbricos Aurex Flow Max",
+    "precio": 189.0,
+    "costo": 117.18,
+    "stock": 18
+  },
+  {
+    "codigo": "NT-AUD-007",
+    "nombre": "Auriculares inalámbricos Aurex Wave Plus",
+    "precio": 206.82,
+    "costo": 128.23,
+    "stock": 19
+  },
+  {
+    "codigo": "NT-AUD-008",
+    "nombre": "Auriculares inalámbricos Aurex Pulse Go",
+    "precio": 224.64,
+    "costo": 139.28,
+    "stock": 20
+  },
+  {
+    "codigo": "NT-AUD-009",
+    "nombre": "Auriculares inalámbricos Aurex Cloud Bass",
+    "precio": 242.46,
+    "costo": 150.33,
+    "stock": 21
+  },
+  {
+    "codigo": "NT-AUD-010",
+    "nombre": "Auriculares inalámbricos Aurex Travel Quiet",
+    "precio": 260.28,
+    "costo": 161.37,
+    "stock": 22
+  },
+  {
+    "codigo": "NT-TEC-001",
+    "nombre": "Teclado Keynova Compact K60",
+    "precio": 79.9,
+    "costo": 49.54,
+    "stock": 14
+  },
+  {
+    "codigo": "NT-TEC-002",
+    "nombre": "Teclado Keynova Mecánico K75",
+    "precio": 94.12,
+    "costo": 58.35,
+    "stock": 16
+  },
+  {
+    "codigo": "NT-TEC-003",
+    "nombre": "Teclado Keynova Mecánico K90",
+    "precio": 108.34,
+    "costo": 67.17,
+    "stock": 18
+  },
+  {
+    "codigo": "NT-TEC-004",
+    "nombre": "Teclado Keynova Slim inalámbrico",
+    "precio": 122.56,
+    "costo": 75.99,
+    "stock": 20
+  },
+  {
+    "codigo": "NT-TEC-005",
+    "nombre": "Teclado Keynova Ergonómico Ergo",
+    "precio": 136.78,
+    "costo": 84.8,
+    "stock": 22
+  },
+  {
+    "codigo": "NT-TEC-006",
+    "nombre": "Teclado Keynova Retroiluminado RGB",
+    "precio": 151.0,
+    "costo": 93.62,
+    "stock": 24
+  },
+  {
+    "codigo": "NT-TEC-007",
+    "nombre": "Teclado Keynova Oficina silencioso",
+    "precio": 165.22,
+    "costo": 102.44,
+    "stock": 26
+  },
+  {
+    "codigo": "NT-TEC-008",
+    "nombre": "Teclado Keynova Bluetooth multidispositivo",
+    "precio": 179.44,
+    "costo": 111.25,
+    "stock": 28
+  },
+  {
+    "codigo": "NT-TEC-009",
+    "nombre": "Teclado Keynova Numérico inalámbrico",
+    "precio": 193.66,
+    "costo": 120.07,
+    "stock": 30
+  },
+  {
+    "codigo": "NT-TEC-010",
+    "nombre": "Teclado Keynova Gaming TKL",
+    "precio": 207.88,
+    "costo": 128.89,
+    "stock": 32
+  },
+  {
+    "codigo": "NT-MOU-001",
+    "nombre": "Mouse Keynova Óptico Essential",
+    "precio": 39.9,
+    "costo": 24.74,
+    "stock": 15
+  },
+  {
+    "codigo": "NT-MOU-002",
+    "nombre": "Mouse Keynova Inalámbrico Air",
+    "precio": 46.92,
+    "costo": 29.09,
+    "stock": 18
+  },
+  {
+    "codigo": "NT-MOU-003",
+    "nombre": "Mouse Keynova Ergonómico Vertical",
+    "precio": 53.94,
+    "costo": 33.44,
+    "stock": 21
+  },
+  {
+    "codigo": "NT-MOU-004",
+    "nombre": "Mouse Keynova Gaming Precision",
+    "precio": 60.96,
+    "costo": 37.8,
+    "stock": 24
+  },
+  {
+    "codigo": "NT-MOU-005",
+    "nombre": "Mouse Keynova Bluetooth Slim",
+    "precio": 67.98,
+    "costo": 42.15,
+    "stock": 27
+  },
+  {
+    "codigo": "NT-MOU-006",
+    "nombre": "Mouse Keynova Recargable Travel",
+    "precio": 75.0,
+    "costo": 46.5,
+    "stock": 30
+  },
+  {
+    "codigo": "NT-MOU-007",
+    "nombre": "Mouse Keynova Silencioso Office",
+    "precio": 82.02,
+    "costo": 50.85,
+    "stock": 33
+  },
+  {
+    "codigo": "NT-MOU-008",
+    "nombre": "Mouse Keynova Trackball Ergo",
+    "precio": 89.04,
+    "costo": 55.2,
+    "stock": 36
+  },
+  {
+    "codigo": "NT-MOU-009",
+    "nombre": "Mouse Keynova Gaming Pro",
+    "precio": 96.06,
+    "costo": 59.56,
+    "stock": 39
+  },
+  {
+    "codigo": "NT-MOU-010",
+    "nombre": "Mouse Keynova Compact Mini",
+    "precio": 103.08,
+    "costo": 63.91,
+    "stock": 42
+  },
+  {
+    "codigo": "NT-MON-001",
+    "nombre": "Monitor Visora 22 FHD IPS",
+    "precio": 499.9,
+    "costo": 309.94,
+    "stock": 16
+  },
+  {
+    "codigo": "NT-MON-002",
+    "nombre": "Monitor Visora 24 FHD IPS",
+    "precio": 589.72,
+    "costo": 365.63,
+    "stock": 20
+  },
+  {
+    "codigo": "NT-MON-003",
+    "nombre": "Monitor Visora 24 FHD 100Hz",
+    "precio": 679.54,
+    "costo": 421.31,
+    "stock": 24
+  },
+  {
+    "codigo": "NT-MON-004",
+    "nombre": "Monitor Visora 27 FHD IPS",
+    "precio": 769.36,
+    "costo": 477.0,
+    "stock": 28
+  },
+  {
+    "codigo": "NT-MON-005",
+    "nombre": "Monitor Visora 27 QHD IPS",
+    "precio": 859.18,
+    "costo": 532.69,
+    "stock": 32
+  },
+  {
+    "codigo": "NT-MON-006",
+    "nombre": "Monitor Visora 27 QHD 165Hz",
+    "precio": 949.0,
+    "costo": 588.38,
+    "stock": 36
+  },
+  {
+    "codigo": "NT-MON-007",
+    "nombre": "Monitor Visora 32 QHD Curvo",
+    "precio": 1038.82,
+    "costo": 644.07,
+    "stock": 40
+  },
+  {
+    "codigo": "NT-MON-008",
+    "nombre": "Monitor Visora 32 UHD 4K",
+    "precio": 1128.64,
+    "costo": 699.76,
+    "stock": 44
+  },
+  {
+    "codigo": "NT-MON-009",
+    "nombre": "Monitor Visora 29 Ultrawide",
+    "precio": 1218.46,
+    "costo": 755.45,
+    "stock": 48
+  },
+  {
+    "codigo": "NT-MON-010",
+    "nombre": "Monitor Visora Portátil 15.6 FHD",
+    "precio": 1308.28,
+    "costo": 811.13,
+    "stock": 52
+  },
+  {
+    "codigo": "NT-ALM-001",
+    "nombre": "Unidad de almacenamiento Datara USB 64 GB",
+    "precio": 69.9,
+    "costo": 43.34,
+    "stock": 17
+  },
+  {
+    "codigo": "NT-ALM-002",
+    "nombre": "Unidad de almacenamiento Datara USB 128 GB",
+    "precio": 82.32,
+    "costo": 51.04,
+    "stock": 22
+  },
+  {
+    "codigo": "NT-ALM-003",
+    "nombre": "Unidad de almacenamiento Datara USB 256 GB",
+    "precio": 94.74,
+    "costo": 58.74,
+    "stock": 27
+  },
+  {
+    "codigo": "NT-ALM-004",
+    "nombre": "Unidad de almacenamiento Datara microSD 128 GB",
+    "precio": 107.16,
+    "costo": 66.44,
+    "stock": 32
+  },
+  {
+    "codigo": "NT-ALM-005",
+    "nombre": "Unidad de almacenamiento Datara microSD 256 GB",
+    "precio": 119.58,
+    "costo": 74.14,
+    "stock": 37
+  },
+  {
+    "codigo": "NT-ALM-006",
+    "nombre": "Unidad de almacenamiento Datara SSD SATA 240 GB",
+    "precio": 132.0,
+    "costo": 81.84,
+    "stock": 42
+  },
+  {
+    "codigo": "NT-ALM-007",
+    "nombre": "Unidad de almacenamiento Datara SSD SATA 480 GB",
+    "precio": 144.42,
+    "costo": 89.54,
+    "stock": 47
+  },
+  {
+    "codigo": "NT-ALM-008",
+    "nombre": "Unidad de almacenamiento Datara SSD NVMe 500 GB",
+    "precio": 156.84,
+    "costo": 97.24,
+    "stock": 52
+  },
+  {
+    "codigo": "NT-ALM-009",
+    "nombre": "Unidad de almacenamiento Datara SSD NVMe 1 TB",
+    "precio": 169.26,
+    "costo": 104.94,
+    "stock": 57
+  },
+  {
+    "codigo": "NT-ALM-010",
+    "nombre": "Unidad de almacenamiento Datara SSD externo 1 TB",
+    "precio": 181.68,
+    "costo": 112.64,
+    "stock": 13
+  },
+  {
+    "codigo": "NT-RED-001",
+    "nombre": "Equipo de red Netvia Router WiFi AC1200",
+    "precio": 89.9,
+    "costo": 55.74,
+    "stock": 18
+  },
+  {
+    "codigo": "NT-RED-002",
+    "nombre": "Equipo de red Netvia Router WiFi AX1800",
+    "precio": 105.92,
+    "costo": 65.67,
+    "stock": 24
+  },
+  {
+    "codigo": "NT-RED-003",
+    "nombre": "Equipo de red Netvia Router Mesh AX3000",
+    "precio": 121.94,
+    "costo": 75.6,
+    "stock": 30
+  },
+  {
+    "codigo": "NT-RED-004",
+    "nombre": "Equipo de red Netvia Repetidor WiFi N300",
+    "precio": 137.96,
+    "costo": 85.54,
+    "stock": 36
+  },
+  {
+    "codigo": "NT-RED-005",
+    "nombre": "Equipo de red Netvia Repetidor WiFi AC750",
+    "precio": 153.98,
+    "costo": 95.47,
+    "stock": 42
+  },
+  {
+    "codigo": "NT-RED-006",
+    "nombre": "Equipo de red Netvia Switch 5 puertos Gigabit",
+    "precio": 170.0,
+    "costo": 105.4,
+    "stock": 48
+  },
+  {
+    "codigo": "NT-RED-007",
+    "nombre": "Equipo de red Netvia Switch 8 puertos Gigabit",
+    "precio": 186.02,
+    "costo": 115.33,
+    "stock": 54
+  },
+  {
+    "codigo": "NT-RED-008",
+    "nombre": "Equipo de red Netvia Adaptador USB WiFi",
+    "precio": 202.04,
+    "costo": 125.26,
+    "stock": 60
+  },
+  {
+    "codigo": "NT-RED-009",
+    "nombre": "Equipo de red Netvia Adaptador USB Ethernet",
+    "precio": 218.06,
+    "costo": 135.2,
+    "stock": 17
+  },
+  {
+    "codigo": "NT-RED-010",
+    "nombre": "Equipo de red Netvia Punto de acceso AX1500",
+    "precio": 234.08,
+    "costo": 145.13,
+    "stock": 23
+  },
+  {
+    "codigo": "NT-CAB-001",
+    "nombre": "Cable Conexa USB-C 1 m",
+    "precio": 19.9,
+    "costo": 12.34,
+    "stock": 19
+  },
+  {
+    "codigo": "NT-CAB-002",
+    "nombre": "Cable Conexa USB-C 2 m",
+    "precio": 23.32,
+    "costo": 14.46,
+    "stock": 26
+  },
+  {
+    "codigo": "NT-CAB-003",
+    "nombre": "Cable Conexa HDMI 2.0 1.5 m",
+    "precio": 26.74,
+    "costo": 16.58,
+    "stock": 33
+  },
+  {
+    "codigo": "NT-CAB-004",
+    "nombre": "Cable Conexa HDMI 2.1 2 m",
+    "precio": 30.16,
+    "costo": 18.7,
+    "stock": 40
+  },
+  {
+    "codigo": "NT-CAB-005",
+    "nombre": "Cable Conexa DisplayPort 1.4 2 m",
+    "precio": 33.58,
+    "costo": 20.82,
+    "stock": 47
+  },
+  {
+    "codigo": "NT-CAB-006",
+    "nombre": "Cable Conexa Ethernet Cat6 3 m",
+    "precio": 37.0,
+    "costo": 22.94,
+    "stock": 54
+  },
+  {
+    "codigo": "NT-CAB-007",
+    "nombre": "Cable Conexa Ethernet Cat6 5 m",
+    "precio": 40.42,
+    "costo": 25.06,
+    "stock": 12
+  },
+  {
+    "codigo": "NT-CAB-008",
+    "nombre": "Cable Conexa USB-A a USB-C 1 m",
+    "precio": 43.84,
+    "costo": 27.18,
+    "stock": 19
+  },
+  {
+    "codigo": "NT-CAB-009",
+    "nombre": "Cable Conexa Audio 3.5 mm 1 m",
+    "precio": 47.26,
+    "costo": 29.3,
+    "stock": 26
+  },
+  {
+    "codigo": "NT-CAB-010",
+    "nombre": "Cable Conexa USB-C a HDMI 2 m",
+    "precio": 50.68,
+    "costo": 31.42,
+    "stock": 33
+  },
+  {
+    "codigo": "NT-ENE-001",
+    "nombre": "Accesorio de energía Voltiva Cargador USB-C 20 W",
+    "precio": 49.9,
+    "costo": 30.94,
+    "stock": 20
+  },
+  {
+    "codigo": "NT-ENE-002",
+    "nombre": "Accesorio de energía Voltiva Cargador USB-C 30 W",
+    "precio": 58.72,
+    "costo": 36.41,
+    "stock": 28
+  },
+  {
+    "codigo": "NT-ENE-003",
+    "nombre": "Accesorio de energía Voltiva Cargador GaN 65 W",
+    "precio": 67.54,
+    "costo": 41.87,
+    "stock": 36
+  },
+  {
+    "codigo": "NT-ENE-004",
+    "nombre": "Accesorio de energía Voltiva Cargador GaN 100 W",
+    "precio": 76.36,
+    "costo": 47.34,
+    "stock": 44
+  },
+  {
+    "codigo": "NT-ENE-005",
+    "nombre": "Accesorio de energía Voltiva Batería portátil 10000 mAh",
+    "precio": 85.18,
+    "costo": 52.81,
+    "stock": 52
+  },
+  {
+    "codigo": "NT-ENE-006",
+    "nombre": "Accesorio de energía Voltiva Batería portátil 20000 mAh",
+    "precio": 94.0,
+    "costo": 58.28,
+    "stock": 60
+  },
+  {
+    "codigo": "NT-ENE-007",
+    "nombre": "Accesorio de energía Voltiva Regleta 6 tomas",
+    "precio": 102.82,
+    "costo": 63.75,
+    "stock": 19
+  },
+  {
+    "codigo": "NT-ENE-008",
+    "nombre": "Accesorio de energía Voltiva Protector de voltaje",
+    "precio": 111.64,
+    "costo": 69.22,
+    "stock": 27
+  },
+  {
+    "codigo": "NT-ENE-009",
+    "nombre": "Accesorio de energía Voltiva UPS 650 VA",
+    "precio": 120.46,
+    "costo": 74.69,
+    "stock": 35
+  },
+  {
+    "codigo": "NT-ENE-010",
+    "nombre": "Accesorio de energía Voltiva Base inalámbrica 15 W",
+    "precio": 129.28,
+    "costo": 80.15,
+    "stock": 43
+  },
+  {
+    "codigo": "NT-VID-001",
+    "nombre": "Accesorio de videoconferencia Visora Webcam HD 720p",
+    "precio": 89.9,
+    "costo": 55.74,
+    "stock": 21
+  },
+  {
+    "codigo": "NT-VID-002",
+    "nombre": "Accesorio de videoconferencia Visora Webcam FHD 1080p",
+    "precio": 105.92,
+    "costo": 65.67,
+    "stock": 30
+  },
+  {
+    "codigo": "NT-VID-003",
+    "nombre": "Accesorio de videoconferencia Visora Webcam QHD 2K",
+    "precio": 121.94,
+    "costo": 75.6,
+    "stock": 39
+  },
+  {
+    "codigo": "NT-VID-004",
+    "nombre": "Accesorio de videoconferencia Visora Webcam UHD 4K",
+    "precio": 137.96,
+    "costo": 85.54,
+    "stock": 48
+  },
+  {
+    "codigo": "NT-VID-005",
+    "nombre": "Accesorio de videoconferencia Visora Micrófono USB Compact",
+    "precio": 153.98,
+    "costo": 95.47,
+    "stock": 57
+  },
+  {
+    "codigo": "NT-VID-006",
+    "nombre": "Accesorio de videoconferencia Visora Micrófono USB Studio",
+    "precio": 170.0,
+    "costo": 105.4,
+    "stock": 17
+  },
+  {
+    "codigo": "NT-VID-007",
+    "nombre": "Accesorio de videoconferencia Visora Aro LED 10 pulgadas",
+    "precio": 186.02,
+    "costo": 115.33,
+    "stock": 26
+  },
+  {
+    "codigo": "NT-VID-008",
+    "nombre": "Accesorio de videoconferencia Visora Panel LED escritorio",
+    "precio": 202.04,
+    "costo": 125.26,
+    "stock": 35
+  },
+  {
+    "codigo": "NT-VID-009",
+    "nombre": "Accesorio de videoconferencia Visora Brazo para micrófono",
+    "precio": 218.06,
+    "costo": 135.2,
+    "stock": 44
+  },
+  {
+    "codigo": "NT-VID-010",
+    "nombre": "Accesorio de videoconferencia Visora Kit de reunión USB",
+    "precio": 234.08,
+    "costo": 145.13,
+    "stock": 53
+  },
+  {
+    "codigo": "NT-MOV-001",
+    "nombre": "Accesorio móvil Moventa Soporte plegable",
+    "precio": 25.9,
+    "costo": 16.06,
+    "stock": 22
+  },
+  {
+    "codigo": "NT-MOV-002",
+    "nombre": "Accesorio móvil Moventa Soporte magnético",
+    "precio": 30.4,
+    "costo": 18.85,
+    "stock": 32
+  },
+  {
+    "codigo": "NT-MOV-003",
+    "nombre": "Accesorio móvil Moventa Soporte escritorio aluminio",
+    "precio": 34.9,
+    "costo": 21.64,
+    "stock": 42
+  },
+  {
+    "codigo": "NT-MOV-004",
+    "nombre": "Accesorio móvil Moventa Funda tablet 10 pulgadas",
+    "precio": 39.4,
+    "costo": 24.43,
+    "stock": 52
+  },
+  {
+    "codigo": "NT-MOV-005",
+    "nombre": "Accesorio móvil Moventa Funda tablet 11 pulgadas",
+    "precio": 43.9,
+    "costo": 27.22,
+    "stock": 13
+  },
+  {
+    "codigo": "NT-MOV-006",
+    "nombre": "Accesorio móvil Moventa Lápiz capacitivo",
+    "precio": 48.4,
+    "costo": 30.01,
+    "stock": 23
+  },
+  {
+    "codigo": "NT-MOV-007",
+    "nombre": "Accesorio móvil Moventa Hub USB-C 4 puertos",
+    "precio": 52.9,
+    "costo": 32.8,
+    "stock": 33
+  },
+  {
+    "codigo": "NT-MOV-008",
+    "nombre": "Accesorio móvil Moventa Hub USB-C 7 en 1",
+    "precio": 57.4,
+    "costo": 35.59,
+    "stock": 43
+  },
+  {
+    "codigo": "NT-MOV-009",
+    "nombre": "Accesorio móvil Moventa Lector de tarjetas USB-C",
+    "precio": 61.9,
+    "costo": 38.38,
+    "stock": 53
+  },
+  {
+    "codigo": "NT-MOV-010",
+    "nombre": "Accesorio móvil Moventa Base tablet ajustable",
+    "precio": 66.4,
+    "costo": 41.17,
+    "stock": 14
+  },
+  {
+    "codigo": "NT-ERG-001",
+    "nombre": "Accesorio de escritorio Ergovia Base laptop ventilada",
+    "precio": 35.9,
+    "costo": 22.26,
+    "stock": 23
+  },
+  {
+    "codigo": "NT-ERG-002",
+    "nombre": "Accesorio de escritorio Ergovia Base laptop aluminio",
+    "precio": 42.2,
+    "costo": 26.16,
+    "stock": 34
+  },
+  {
+    "codigo": "NT-ERG-003",
+    "nombre": "Accesorio de escritorio Ergovia Elevador de monitor",
+    "precio": 48.5,
+    "costo": 30.07,
+    "stock": 45
+  },
+  {
+    "codigo": "NT-ERG-004",
+    "nombre": "Accesorio de escritorio Ergovia Reposamuñecas teclado",
+    "precio": 54.8,
+    "costo": 33.98,
+    "stock": 56
+  },
+  {
+    "codigo": "NT-ERG-005",
+    "nombre": "Accesorio de escritorio Ergovia Reposamuñecas mouse",
+    "precio": 61.1,
+    "costo": 37.88,
+    "stock": 18
+  },
+  {
+    "codigo": "NT-ERG-006",
+    "nombre": "Accesorio de escritorio Ergovia Mousepad XL",
+    "precio": 67.4,
+    "costo": 41.79,
+    "stock": 29
+  },
+  {
+    "codigo": "NT-ERG-007",
+    "nombre": "Accesorio de escritorio Ergovia Mousepad antideslizante",
+    "precio": 73.7,
+    "costo": 45.69,
+    "stock": 40
+  },
+  {
+    "codigo": "NT-ERG-008",
+    "nombre": "Accesorio de escritorio Ergovia Organizador de cables",
+    "precio": 80.0,
+    "costo": 49.6,
+    "stock": 51
+  },
+  {
+    "codigo": "NT-ERG-009",
+    "nombre": "Accesorio de escritorio Ergovia Soporte doble monitor",
+    "precio": 86.3,
+    "costo": 53.51,
+    "stock": 13
+  },
+  {
+    "codigo": "NT-ERG-010",
+    "nombre": "Accesorio de escritorio Ergovia Alfombrilla escritorio",
+    "precio": 92.6,
+    "costo": 57.41,
+    "stock": 24
+  },
+  {
+    "codigo": "NT-INS-001",
+    "nombre": "Insumo de mantenimiento Cleanova Paño microfibra",
+    "precio": 15.9,
+    "costo": 9.86,
+    "stock": 24
+  },
+  {
+    "codigo": "NT-INS-002",
+    "nombre": "Insumo de mantenimiento Cleanova Kit limpieza pantalla",
+    "precio": 18.6,
+    "costo": 11.53,
+    "stock": 36
+  },
+  {
+    "codigo": "NT-INS-003",
+    "nombre": "Insumo de mantenimiento Cleanova Cepillo antiestático",
+    "precio": 21.3,
+    "costo": 13.21,
+    "stock": 48
+  },
+  {
+    "codigo": "NT-INS-004",
+    "nombre": "Insumo de mantenimiento Cleanova Pasta térmica 4 g",
+    "precio": 24.0,
+    "costo": 14.88,
+    "stock": 60
+  },
+  {
+    "codigo": "NT-INS-005",
+    "nombre": "Insumo de mantenimiento Cleanova Pasta térmica 8 g",
+    "precio": 26.7,
+    "costo": 16.55,
+    "stock": 23
+  },
+  {
+    "codigo": "NT-INS-006",
+    "nombre": "Insumo de mantenimiento Cleanova Bridas reutilizables",
+    "precio": 29.4,
+    "costo": 18.23,
+    "stock": 35
+  },
+  {
+    "codigo": "NT-INS-007",
+    "nombre": "Insumo de mantenimiento Cleanova Organizador espiral",
+    "precio": 32.1,
+    "costo": 19.9,
+    "stock": 47
+  },
+  {
+    "codigo": "NT-INS-008",
+    "nombre": "Insumo de mantenimiento Cleanova Kit destornilladores",
+    "precio": 34.8,
+    "costo": 21.58,
+    "stock": 59
+  },
+  {
+    "codigo": "NT-INS-009",
+    "nombre": "Insumo de mantenimiento Cleanova Pulsera antiestática",
+    "precio": 37.5,
+    "costo": 23.25,
+    "stock": 22
+  },
+  {
+    "codigo": "NT-INS-010",
+    "nombre": "Insumo de mantenimiento Cleanova Soplador manual",
+    "precio": 40.2,
+    "costo": 24.92,
+    "stock": 34
+  }
+]

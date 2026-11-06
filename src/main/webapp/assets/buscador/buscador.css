@@ -1,0 +1,8 @@
+.buscador-remoto{min-width:220px;white-space:normal}
+.buscador-remoto select[hidden],.buscador-remoto [hidden]{display:none!important}
+.buscador-remoto input{width:100%;box-sizing:border-box}
+.buscador-estado{display:block;font-size:.78rem;color:#52657c;font-weight:400;line-height:1.5;margin-top:5px}
+.buscador-resultados{max-height:260px;overflow:auto;border:1px solid #b9cbe2;border-radius:8px;background:#fff;margin-top:6px;box-shadow:0 5px 14px #102a4312}
+.buscador-opcion{padding:11px 13px;cursor:pointer;color:#162c46;font-weight:400;border-bottom:1px solid #edf1f6;line-height:1.5;font-size:.85rem}
+.buscador-opcion:hover,.buscador-opcion[aria-selected=true]{background:#eaf2ff;color:#164fc5}
+.buscador-remoto .buscador-mas{margin-top:6px;font-size:.8rem}

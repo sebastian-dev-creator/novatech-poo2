@@ -36,7 +36,7 @@ public final class VentasServlet extends HttpServlet {
                 if("agregar".equals(valor(q,"accion"))&&lineas.size()<50)lineas.add(new String[]{"","1"});
             }else{Venta v=editarPedido?pedido.datos:new Venta();f=cabecera(v);for(DetalleVenta d:v.detalles)lineas.add(new String[]{""+d.productoId,d.cantidad.toPlainString()});}
             if(lineas.isEmpty())lineas.add(new String[]{"","1"});
-            List<Cliente> opcionesCliente=new ArrayList<>(clientes.listar(""));List<Producto> opcionesProducto=new ArrayList<>(productos.listar(""));
+            List<Cliente> opcionesCliente=new ArrayList<>();List<Producto> opcionesProducto=new ArrayList<>();
             int elegido=0;try{elegido=Validacion.id(f.get("cliente"));}catch(IllegalArgumentException ignored){}
             boolean existe=false;for(Cliente x:opcionesCliente)if(x.id==elegido)existe=true;
             if(elegido>0&&!existe){Cliente x=clientes.buscar(elegido);if(x!=null)opcionesCliente.add(x);}
