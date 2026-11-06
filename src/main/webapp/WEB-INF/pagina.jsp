@@ -16,4 +16,7 @@
 <%if("productos.jsp".equals(vista)){%><jsp:include page="vistas/productos.jsp"/><%}%>
 <%if("catalogos-productos.jsp".equals(vista)){%><jsp:include page="vistas/catalogos-productos.jsp"/><%}%>
 <%if("ventas.jsp".equals(vista)){%><jsp:include page="vistas/ventas.jsp"/><%}%>
+<%if("reportes.jsp".equals(vista)){%><jsp:include page="vistas/reportes.jsp"/><%}%>
+<%if("compras.jsp".equals(vista)){%><jsp:include page="vistas/compras.jsp"/><%}%>
+<%if("datos-reportes.jsp".equals(vista)){%><jsp:include page="vistas/datos-reportes.jsp"/><%}%>
 </main><footer>NovaTech · Proyecto académico de Programación Orientada a Objetos II</footer></div></div></body></html>

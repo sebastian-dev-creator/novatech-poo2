@@ -55,6 +55,14 @@ public final class ConexionBD {
             throw new SQLException("No se encontró MySQL Connector/J.", e);
         }
 
-        return DriverManager.getConnection(url, usuario, password);
+        Connection conexion = DriverManager.getConnection(url, usuario, password);
+        try (java.sql.PreparedStatement p = conexion.prepareStatement("SET @nt_actor=?, @nt_motivo='Ajuste de inventario'")) {
+            p.setString(1, com.mycompany.novatech.app.reportes.ContextoOperacion.actor());
+            p.execute();
+            return conexion;
+        } catch (SQLException e) {
+            conexion.close();
+            throw e;
+        }
     }
 }

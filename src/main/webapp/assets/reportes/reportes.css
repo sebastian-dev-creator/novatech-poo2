@@ -1,0 +1,2 @@
+.report-chart{height:400px;width:100%;margin:20px 0}.toolbar{flex-wrap:wrap}.toolbar label:first-child{min-width:260px}caption{text-align:left;padding:12px;color:var(--muted)}.report-config{margin-bottom:24px}.purchase-lines input,.purchase-lines select{min-width:110px}.purchase-lines td{padding:8px}.error-notice{background:#fff0ed;color:#8a2535;border-color:#edbfc3}
+@media(max-width:700px){.report-chart{height:320px}.toolbar label:first-child{min-width:0}.toolbar button{flex:1}}

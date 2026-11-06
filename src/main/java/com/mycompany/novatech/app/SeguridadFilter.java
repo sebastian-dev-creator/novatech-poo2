@@ -35,9 +35,14 @@ public final class SeguridadFilter implements Filter {
         if("/proveedores".equals(path))permiso="GESTIONAR_PROVEEDORES";
         if("/productos".equals(path)||"/catalogos-productos".equals(path))permiso="GESTIONAR_PRODUCTOS";
         if("/ventas".equals(path))permiso="GESTIONAR_VENTAS";
+        if("/reportes".equals(path))permiso="VER_REPORTES";
+        if("/compras".equals(path))permiso="GESTIONAR_COMPRAS";
+        if("/datos-reportes".equals(path) && !actual.esAdministrador()){s.sendError(403,"Solo el administrador configura estos datos.");return;}
         if(permiso!=null && !actual.puede(permiso)){s.sendError(403,"Tu rol no tiene permiso para esta opción.");return;}
         if("/permisos".equals(path)&&!actual.esAdministrador()){s.sendError(403,"Solo el administrador asigna permisos.");return;}
         if("/usuarios".equals(path)&&"POST".equals(q.getMethod())&&"desbloquear".equals(q.getParameter("accion"))&&!actual.puede("DESBLOQUEAR_USUARIOS")){s.sendError(403,"Tu rol no puede desbloquear usuarios.");return;}
-        chain.doFilter(q,s);
+        com.mycompany.novatech.app.reportes.ContextoOperacion.establecer(actual == null ? "Acceso" : actual.username);
+        try { chain.doFilter(q,s); }
+        finally { com.mycompany.novatech.app.reportes.ContextoOperacion.limpiar(); }
     }
 }

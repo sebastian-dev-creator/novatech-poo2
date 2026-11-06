@@ -13,7 +13,9 @@ public final class MenuMediator {
         new AbrirModuloCommand("clientes","Clientes","/clientes","GESTIONAR_CLIENTES"),
         new AbrirModuloCommand("proveedores","Proveedores","/proveedores","GESTIONAR_PROVEEDORES"),
         new AbrirModuloCommand("productos","Productos y servicios","/productos","GESTIONAR_PRODUCTOS"),
-        new AbrirModuloCommand("ventas","Ventas","/ventas","GESTIONAR_VENTAS"));
+        new AbrirModuloCommand("ventas","Ventas","/ventas","GESTIONAR_VENTAS"),
+        new AbrirModuloCommand("compras","Compras","/compras","GESTIONAR_COMPRAS"),
+        new AbrirModuloCommand("reportes","Reportes","/reportes","VER_REPORTES"));
     public List<ComandoMenu> opcionesPara(Usuario usuario){
         List<ComandoMenu> visibles=new ArrayList<>();
         for(ComandoMenu opcion:opciones)if(opcion.disponiblePara(usuario))visibles.add(opcion);

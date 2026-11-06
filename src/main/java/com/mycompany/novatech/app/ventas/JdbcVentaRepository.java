@@ -21,7 +21,7 @@ public final class JdbcVentaRepository implements VentaRepository {
         Venta v;
         try(PreparedStatement p=c.prepareStatement("SELECT * FROM ventas WHERE id=?"+(bloquear?" FOR UPDATE":""))){p.setInt(1,id);try(ResultSet r=p.executeQuery()){if(!r.next())return null;v=cabecera(r);}}
         try(PreparedStatement p=c.prepareStatement("SELECT * FROM detalle_venta WHERE id_venta=? ORDER BY id_producto")){p.setInt(1,id);try(ResultSet r=p.executeQuery()){while(r.next()){
-            DetalleVenta d=new DetalleVenta(r.getInt("id_producto"),r.getBigDecimal("cantidad"));d.codigo=r.getString("codigo");d.nombre=r.getString("nombre");d.tipo=r.getString("tipo");d.precio=r.getBigDecimal("precio_unitario");d.subtotal=r.getBigDecimal("subtotal");v.detalles.add(d);
+            DetalleVenta d=new DetalleVenta(r.getInt("id_producto"),r.getBigDecimal("cantidad"));d.codigo=r.getString("codigo");d.nombre=r.getString("nombre");d.tipo=r.getString("tipo");d.precio=r.getBigDecimal("precio_unitario");d.subtotal=r.getBigDecimal("subtotal");d.costo=r.getBigDecimal("costo_unitario");v.detalles.add(d);
         }}}
         try (PreparedStatement p = c.prepareStatement("SELECT (SELECT id FROM solped WHERE id_venta=?) solicitud,g.id,g.fecha,g.estado FROM (SELECT 1) x LEFT JOIN guias g ON g.id_venta=?")) {
             p.setInt(1,id); p.setInt(2,id);
@@ -149,10 +149,13 @@ public final class JdbcVentaRepository implements VentaRepository {
     private void transicion(int id,int version,String medio,String actor,boolean anular)throws SQLException {
         try(Connection c=abrir()){c.setAutoCommit(false);try {
             Venta v=vigente(c,id,version);EstadoVenta estado=EstadoVenta.de(v.estado);String nuevo=anular?estado.anular():estado.pagar();
+            try (PreparedStatement motivo=c.prepareStatement("SET @nt_motivo=?, @nt_actor=?")) {
+                motivo.setString(1,(anular?"Anulación venta ":"Venta ")+id);motivo.setString(2,actor);motivo.execute();
+            }
             if(!anular)cliente(c,v,false);
             // Una pendiente nunca descontó existencias: su anulación no toca productos.
             if(!anular || "PAGADA".equals(v.estado))
-            for(DetalleVenta d:v.detalles)try(PreparedStatement p=c.prepareStatement("SELECT tipo,activo,stock FROM productos WHERE id=? FOR UPDATE")) {
+            for(DetalleVenta d:v.detalles)try(PreparedStatement p=c.prepareStatement("SELECT tipo,activo,stock,costo FROM productos WHERE id=? FOR UPDATE")) {
                 p.setInt(1,d.productoId);try(ResultSet r=p.executeQuery()) {
                     if(!r.next())throw new IllegalArgumentException("El artículo ya no existe.");
                     if(!r.getString(1).equals(d.tipo))throw new IllegalArgumentException("Cambió el tipo del artículo. Anula la venta y registra una nueva.");
@@ -161,9 +164,20 @@ public final class JdbcVentaRepository implements VentaRepository {
                         BigDecimal stock=anular?r.getBigDecimal(3).add(d.cantidad):r.getBigDecimal(3).subtract(d.cantidad);
                         if(stock.signum()<0)throw new IllegalArgumentException("Stock insuficiente para "+d.codigo+". No se registró el pago.");
                         if(stock.compareTo(new BigDecimal("999999999.99"))>0)throw new IllegalArgumentException("La devolución supera la capacidad del stock.");
-                        try(PreparedStatement u=c.prepareStatement("UPDATE productos SET stock=? WHERE id=?")){u.setBigDecimal(1,stock);u.setInt(2,d.productoId);u.executeUpdate();}
+                        BigDecimal costo=r.getBigDecimal(4);
+                        if(anular) {
+                            BigDecimal anterior=r.getBigDecimal(3);
+                            costo=anterior.signum()==0?d.costo:costo==null||d.costo==null?null:
+                                    anterior.multiply(costo).add(d.cantidad.multiply(d.costo)).divide(stock,2,RoundingMode.HALF_UP);
+                        }
+                        try(PreparedStatement u=c.prepareStatement("UPDATE productos SET stock=?,costo=? WHERE id=?")){
+                            u.setBigDecimal(1,stock);u.setBigDecimal(2,costo);u.setInt(3,d.productoId);u.executeUpdate();
+                        }
                     }
                 }
+            }
+            if(!anular)try(PreparedStatement costos=c.prepareStatement("UPDATE detalle_venta d JOIN productos p ON p.id=d.id_producto SET d.costo_unitario=p.costo WHERE d.id_venta=?")) {
+                costos.setInt(1,id);costos.executeUpdate();
             }
             String sql=anular?"UPDATE ventas SET estado=?,fecha_anulacion=CURRENT_TIMESTAMP,usuario_actualizacion=?,version=version+1 WHERE id=?":"UPDATE ventas SET estado=?,fecha_pago=CURRENT_TIMESTAMP,usuario_actualizacion=?,version=version+1,medio_pago=? WHERE id=?";
             try(PreparedStatement p=c.prepareStatement(sql)){p.setString(1,nuevo);p.setString(2,actor);if(anular)p.setInt(3,id);else {p.setString(3,medio);p.setInt(4,id);}p.executeUpdate();}

@@ -1,0 +1,374 @@
+PASS: Reportes requiere sesión
+PASS: Operador sin permiso rechazado /reportes
+PASS: Operador sin permiso rechazado /compras
+PASS: Operador sin permiso rechazado /datos-reportes
+PASS: Vista JSP /reportes
+PASS: Vista JSP /compras
+PASS: Vista JSP /compras?nuevo=1
+PASS: Vista JSP /datos-reportes
+PASS: CSRF compras
+PASS: Fechas invertidas rechazadas
+PASS: Reporte arbitrario rechazado
+PASS: Agrupación fuera de catálogo rechazada
+PASS: Asignar área por HTTP
+PASS: Asignar segmento por HTTP
+PASS: Asignar categoría por HTTP
+PASS: Costo negativo rechazado
+PASS: Registrar compra por HTTP
+PASS: Reenvío de clave no duplica compra
+PASS: Compra escapa HTML almacenado
+PASS: Recibir compra por HTTP
+PASS: Recepción suma stock una vez
+PASS: Costo promedio ponderado 6.00
+PASS: Reintento de recepción obsoleta rechazado
+PASS: Reintento conserva stock
+PASS: Pago de compra por HTTP
+PASS: Pago repetido rechazado
+PASS: Anular compra pendiente conserva orden
+PASS: Compra anulada no recibible
+PASS: Cantidad cero rechazada
+PASS: Rentabilidad usa descuento de cabecera
+PASS: Costo de venta congelado 12.00
+PASS: Margen bruto 24.00
+PASS: Cambio de costo actual conserva margen histórico
+PASS: Cobro permanece en día original
+PASS: Devolución se informa en día de anulación
+PASS: Devolución incorpora costo histórico al promedio actual
+PASS: Venta anulada excluida del margen vigente
+PASS: Costo desconocido produce margen vacío
+PASS: Fecha final incluye 23:59:59
+PASS: Consulta SQL u01
+PASS: HTTP reporte u01
+PASS: Excel HTTP u01
+PASS: Sin fórmulas inyectadas u01
+PASS: Sin fórmulas inyectadas u01
+PASS: Libro con datos y criterios u01
+PASS: Consulta SQL u02
+PASS: HTTP reporte u02
+PASS: Excel HTTP u02
+PASS: Sin fórmulas inyectadas u02
+PASS: Sin fórmulas inyectadas u02
+PASS: Libro con datos y criterios u02
+PASS: Consulta SQL u03
+PASS: HTTP reporte u03
+PASS: Excel HTTP u03
+PASS: Sin fórmulas inyectadas u03
+PASS: Sin fórmulas inyectadas u03
+PASS: Libro con datos y criterios u03
+PASS: Consulta SQL u04
+PASS: HTTP reporte u04
+PASS: Excel HTTP u04
+PASS: Sin fórmulas inyectadas u04
+PASS: Sin fórmulas inyectadas u04
+PASS: Libro con datos y criterios u04
+PASS: Consulta SQL u05
+PASS: HTTP reporte u05
+PASS: Excel HTTP u05
+PASS: Sin fórmulas inyectadas u05
+PASS: Sin fórmulas inyectadas u05
+PASS: Libro con datos y criterios u05
+PASS: Consulta SQL u06
+PASS: HTTP reporte u06
+PASS: Excel HTTP u06
+PASS: Sin fórmulas inyectadas u06
+PASS: Sin fórmulas inyectadas u06
+PASS: Libro con datos y criterios u06
+PASS: Consulta SQL u07
+PASS: HTTP reporte u07
+PASS: Excel HTTP u07
+PASS: Sin fórmulas inyectadas u07
+PASS: Sin fórmulas inyectadas u07
+PASS: Libro con datos y criterios u07
+PASS: Consulta SQL u08
+PASS: HTTP reporte u08
+PASS: Excel HTTP u08
+PASS: Sin fórmulas inyectadas u08
+PASS: Sin fórmulas inyectadas u08
+PASS: Libro con datos y criterios u08
+PASS: Consulta SQL c01
+PASS: HTTP reporte c01
+PASS: Excel HTTP c01
+PASS: Sin fórmulas inyectadas c01
+PASS: Sin fórmulas inyectadas c01
+PASS: Libro con datos y criterios c01
+PASS: Consulta SQL c02
+PASS: HTTP reporte c02
+PASS: Excel HTTP c02
+PASS: Sin fórmulas inyectadas c02
+PASS: Sin fórmulas inyectadas c02
+PASS: Libro con datos y criterios c02
+PASS: Consulta SQL c03
+PASS: HTTP reporte c03
+PASS: Excel HTTP c03
+PASS: Sin fórmulas inyectadas c03
+PASS: Sin fórmulas inyectadas c03
+PASS: Libro con datos y criterios c03
+PASS: Consulta SQL c04
+PASS: HTTP reporte c04
+PASS: Excel HTTP c04
+PASS: Sin fórmulas inyectadas c04
+PASS: Sin fórmulas inyectadas c04
+PASS: Libro con datos y criterios c04
+PASS: Consulta SQL c10
+PASS: HTTP reporte c10
+PASS: Excel HTTP c10
+PASS: Sin fórmulas inyectadas c10
+PASS: Sin fórmulas inyectadas c10
+PASS: Libro con datos y criterios c10
+PASS: Consulta SQL c05
+PASS: HTTP reporte c05
+PASS: Excel HTTP c05
+PASS: Sin fórmulas inyectadas c05
+PASS: Sin fórmulas inyectadas c05
+PASS: Libro con datos y criterios c05
+PASS: Consulta SQL c06
+PASS: HTTP reporte c06
+PASS: Excel HTTP c06
+PASS: Sin fórmulas inyectadas c06
+PASS: Sin fórmulas inyectadas c06
+PASS: Libro con datos y criterios c06
+PASS: Consulta SQL c07
+PASS: HTTP reporte c07
+PASS: Excel HTTP c07
+PASS: Sin fórmulas inyectadas c07
+PASS: Sin fórmulas inyectadas c07
+PASS: Libro con datos y criterios c07
+PASS: Consulta SQL c08
+PASS: HTTP reporte c08
+PASS: Excel HTTP c08
+PASS: Sin fórmulas inyectadas c08
+PASS: Sin fórmulas inyectadas c08
+PASS: Libro con datos y criterios c08
+PASS: Consulta SQL c09
+PASS: HTTP reporte c09
+PASS: Excel HTTP c09
+PASS: Sin fórmulas inyectadas c09
+PASS: Sin fórmulas inyectadas c09
+PASS: Libro con datos y criterios c09
+PASS: Consulta SQL s01
+PASS: HTTP reporte s01
+PASS: Excel HTTP s01
+PASS: Sin fórmulas inyectadas s01
+PASS: Sin fórmulas inyectadas s01
+PASS: Libro con datos y criterios s01
+PASS: Consulta SQL s02
+PASS: HTTP reporte s02
+PASS: Excel HTTP s02
+PASS: Sin fórmulas inyectadas s02
+PASS: Sin fórmulas inyectadas s02
+PASS: Libro con datos y criterios s02
+PASS: Consulta SQL s03
+PASS: HTTP reporte s03
+PASS: Excel HTTP s03
+PASS: Sin fórmulas inyectadas s03
+PASS: Sin fórmulas inyectadas s03
+PASS: Libro con datos y criterios s03
+PASS: Consulta SQL s04
+PASS: HTTP reporte s04
+PASS: Excel HTTP s04
+PASS: Sin fórmulas inyectadas s04
+PASS: Sin fórmulas inyectadas s04
+PASS: Libro con datos y criterios s04
+PASS: Consulta SQL s05
+PASS: HTTP reporte s05
+PASS: Excel HTTP s05
+PASS: Sin fórmulas inyectadas s05
+PASS: Sin fórmulas inyectadas s05
+PASS: Libro con datos y criterios s05
+PASS: Consulta SQL s06
+PASS: HTTP reporte s06
+PASS: Excel HTTP s06
+PASS: Sin fórmulas inyectadas s06
+PASS: Sin fórmulas inyectadas s06
+PASS: Libro con datos y criterios s06
+PASS: Consulta SQL s07
+PASS: HTTP reporte s07
+PASS: Excel HTTP s07
+PASS: Sin fórmulas inyectadas s07
+PASS: Sin fórmulas inyectadas s07
+PASS: Libro con datos y criterios s07
+PASS: Consulta SQL s08
+PASS: HTTP reporte s08
+PASS: Excel HTTP s08
+PASS: Sin fórmulas inyectadas s08
+PASS: Sin fórmulas inyectadas s08
+PASS: Libro con datos y criterios s08
+PASS: Consulta SQL s09
+PASS: HTTP reporte s09
+PASS: Excel HTTP s09
+PASS: Sin fórmulas inyectadas s09
+PASS: Sin fórmulas inyectadas s09
+PASS: Libro con datos y criterios s09
+PASS: Consulta SQL s10
+PASS: HTTP reporte s10
+PASS: Excel HTTP s10
+PASS: Sin fórmulas inyectadas s10
+PASS: Sin fórmulas inyectadas s10
+PASS: Libro con datos y criterios s10
+PASS: Consulta SQL p01
+PASS: HTTP reporte p01
+PASS: Excel HTTP p01
+PASS: Sin fórmulas inyectadas p01
+PASS: Sin fórmulas inyectadas p01
+PASS: Libro con datos y criterios p01
+PASS: Consulta SQL p02
+PASS: HTTP reporte p02
+PASS: Excel HTTP p02
+PASS: Sin fórmulas inyectadas p02
+PASS: Sin fórmulas inyectadas p02
+PASS: Libro con datos y criterios p02
+PASS: Consulta SQL p03
+PASS: HTTP reporte p03
+PASS: Excel HTTP p03
+PASS: Sin fórmulas inyectadas p03
+PASS: Sin fórmulas inyectadas p03
+PASS: Libro con datos y criterios p03
+PASS: Consulta SQL p04
+PASS: HTTP reporte p04
+PASS: Excel HTTP p04
+PASS: Sin fórmulas inyectadas p04
+PASS: Sin fórmulas inyectadas p04
+PASS: Libro con datos y criterios p04
+PASS: Consulta SQL p05
+PASS: HTTP reporte p05
+PASS: Excel HTTP p05
+PASS: Sin fórmulas inyectadas p05
+PASS: Sin fórmulas inyectadas p05
+PASS: Libro con datos y criterios p05
+PASS: Consulta SQL p06
+PASS: HTTP reporte p06
+PASS: Excel HTTP p06
+PASS: Sin fórmulas inyectadas p06
+PASS: Sin fórmulas inyectadas p06
+PASS: Libro con datos y criterios p06
+PASS: Consulta SQL p07
+PASS: HTTP reporte p07
+PASS: Excel HTTP p07
+PASS: Sin fórmulas inyectadas p07
+PASS: Sin fórmulas inyectadas p07
+PASS: Libro con datos y criterios p07
+PASS: Consulta SQL p08
+PASS: HTTP reporte p08
+PASS: Excel HTTP p08
+PASS: Sin fórmulas inyectadas p08
+PASS: Sin fórmulas inyectadas p08
+PASS: Libro con datos y criterios p08
+PASS: Consulta SQL p09
+PASS: HTTP reporte p09
+PASS: Excel HTTP p09
+PASS: Sin fórmulas inyectadas p09
+PASS: Sin fórmulas inyectadas p09
+PASS: Libro con datos y criterios p09
+PASS: Consulta SQL p10
+PASS: HTTP reporte p10
+PASS: Excel HTTP p10
+PASS: Sin fórmulas inyectadas p10
+PASS: Sin fórmulas inyectadas p10
+PASS: Libro con datos y criterios p10
+PASS: Consulta SQL p11
+PASS: HTTP reporte p11
+PASS: Excel HTTP p11
+PASS: Sin fórmulas inyectadas p11
+PASS: Sin fórmulas inyectadas p11
+PASS: Libro con datos y criterios p11
+PASS: Consulta SQL p12
+PASS: HTTP reporte p12
+PASS: Excel HTTP p12
+PASS: Sin fórmulas inyectadas p12
+PASS: Sin fórmulas inyectadas p12
+PASS: Libro con datos y criterios p12
+PASS: Consulta SQL v01
+PASS: HTTP reporte v01
+PASS: Excel HTTP v01
+PASS: Sin fórmulas inyectadas v01
+PASS: Sin fórmulas inyectadas v01
+PASS: Libro con datos y criterios v01
+PASS: Consulta SQL v02
+PASS: HTTP reporte v02
+PASS: Excel HTTP v02
+PASS: Sin fórmulas inyectadas v02
+PASS: Sin fórmulas inyectadas v02
+PASS: Libro con datos y criterios v02
+PASS: Consulta SQL v03
+PASS: HTTP reporte v03
+PASS: Excel HTTP v03
+PASS: Sin fórmulas inyectadas v03
+PASS: Sin fórmulas inyectadas v03
+PASS: Libro con datos y criterios v03
+PASS: Consulta SQL v04
+PASS: HTTP reporte v04
+PASS: Excel HTTP v04
+PASS: Sin fórmulas inyectadas v04
+PASS: Sin fórmulas inyectadas v04
+PASS: Libro con datos y criterios v04
+PASS: Consulta SQL v05
+PASS: HTTP reporte v05
+PASS: Excel HTTP v05
+PASS: Sin fórmulas inyectadas v05
+PASS: Sin fórmulas inyectadas v05
+PASS: Libro con datos y criterios v05
+PASS: Consulta SQL v06
+PASS: HTTP reporte v06
+PASS: Excel HTTP v06
+PASS: Sin fórmulas inyectadas v06
+PASS: Sin fórmulas inyectadas v06
+PASS: Libro con datos y criterios v06
+PASS: Consulta SQL v07
+PASS: HTTP reporte v07
+PASS: Excel HTTP v07
+PASS: Sin fórmulas inyectadas v07
+PASS: Sin fórmulas inyectadas v07
+PASS: Libro con datos y criterios v07
+PASS: Consulta SQL v08
+PASS: HTTP reporte v08
+PASS: Excel HTTP v08
+PASS: Sin fórmulas inyectadas v08
+PASS: Sin fórmulas inyectadas v08
+PASS: Libro con datos y criterios v08
+PASS: Consulta SQL v09
+PASS: HTTP reporte v09
+PASS: Excel HTTP v09
+PASS: Sin fórmulas inyectadas v09
+PASS: Sin fórmulas inyectadas v09
+PASS: Libro con datos y criterios v09
+PASS: Consulta SQL v10
+PASS: HTTP reporte v10
+PASS: Excel HTTP v10
+PASS: Sin fórmulas inyectadas v10
+PASS: Sin fórmulas inyectadas v10
+PASS: Libro con datos y criterios v10
+PASS: Consulta SQL v11
+PASS: HTTP reporte v11
+PASS: Excel HTTP v11
+PASS: Sin fórmulas inyectadas v11
+PASS: Sin fórmulas inyectadas v11
+PASS: Libro con datos y criterios v11
+PASS: Consulta SQL v12
+PASS: HTTP reporte v12
+PASS: Excel HTTP v12
+PASS: Sin fórmulas inyectadas v12
+PASS: Sin fórmulas inyectadas v12
+PASS: Libro con datos y criterios v12
+PASS: Consulta SQL v13
+PASS: HTTP reporte v13
+PASS: Excel HTTP v13
+PASS: Sin fórmulas inyectadas v13
+PASS: Sin fórmulas inyectadas v13
+PASS: Libro con datos y criterios v13
+PASS: Consulta SQL v14
+PASS: HTTP reporte v14
+PASS: Excel HTTP v14
+PASS: Sin fórmulas inyectadas v14
+PASS: Sin fórmulas inyectadas v14
+PASS: Libro con datos y criterios v14
+PASS: Consulta SQL v15
+PASS: HTTP reporte v15
+PASS: Excel HTTP v15
+PASS: Sin fórmulas inyectadas v15
+PASS: Sin fórmulas inyectadas v15
+PASS: Libro con datos y criterios v15
+PASS: Historial registra acceso correcto
+PASS: Kárdex registra recepción, ventas y devolución
+PASS: Detectar límite de pantalla
+TOTAL COMPROBACIONES ETAPA 7: 372
+Fixture local retirado.

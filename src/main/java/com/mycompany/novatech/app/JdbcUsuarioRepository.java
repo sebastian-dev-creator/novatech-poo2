@@ -68,11 +68,11 @@ public final class JdbcUsuarioRepository implements UsuarioRepository {
                 p.setString(1,nombre);
                 Usuario u; String hash;
                 try(ResultSet r=p.executeQuery()) {
-                    if(!r.next()) { c.rollback(); return ResultadoAcceso.denegado(); }
+                    if(!r.next()) { registrarAcceso(c,nombre,"DENEGADO"); c.commit(); return ResultadoAcceso.denegado(); }
                     u=map(r); hash=r.getString("password_hash");
                 }
-                if(u.bloqueado) { c.rollback(); return ResultadoAcceso.bloqueado(); }
-                if(!u.activo) { c.rollback(); return ResultadoAcceso.denegado(); }
+                if(u.bloqueado) { registrarAcceso(c,nombre,"BLOQUEADO"); c.commit(); return ResultadoAcceso.bloqueado(); }
+                if(!u.activo) { registrarAcceso(c,nombre,"INACTIVO"); c.commit(); return ResultadoAcceso.denegado(); }
                 boolean ok=PasswordUtil.verificar(password,hash);
                 try(PreparedStatement q=c.prepareStatement(ok
                     ?"UPDATE usuarios SET intentos_fallidos=0, ultimo_acceso=CURRENT_TIMESTAMP WHERE id_usuario=?"
@@ -81,6 +81,7 @@ public final class JdbcUsuarioRepository implements UsuarioRepository {
                     else { int n=Math.min(3,u.intentos+1); q.setInt(1,n); q.setBoolean(2,n>=3); q.setInt(3,u.id); }
                     q.executeUpdate();
                 }
+                registrarAcceso(c,nombre,ok ? "CORRECTO" : u.intentos+1>=3 ? "BLOQUEADO" : "DENEGADO");
                 c.commit();
                 if(ok) { u.intentos=0; return ResultadoAcceso.correcto(u); }
                 return u.intentos+1>=3 ? ResultadoAcceso.bloqueado() : ResultadoAcceso.denegado();
@@ -88,6 +89,11 @@ public final class JdbcUsuarioRepository implements UsuarioRepository {
         }
     }
 
+    private void registrarAcceso(Connection c,String usuario,String resultado) throws SQLException {
+        try (PreparedStatement p=c.prepareStatement("INSERT INTO accesos(usuario,resultado) VALUES (?,?)")) {
+            p.setString(1,usuario);p.setString(2,resultado);p.executeUpdate();
+        }
+    }
     private void bloquearAdministradores(Connection c) throws SQLException {
         try(PreparedStatement p=c.prepareStatement("SELECT id_rol FROM roles WHERE nombre='ADMINISTRADOR' FOR UPDATE");ResultSet r=p.executeQuery()) { while(r.next()) {} }
     }
